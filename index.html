@@ -1,0 +1,367 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fib-Precision F&O India - Netlify Live Terminal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.js"></script>
+    <style>
+        body { background-color: #0b0f19; color: #e2e8f0; font-family: monospace; }
+        .card { background-color: #131b2e; border: 1px solid #1e293b; border-radius: 8px; }
+        .touch-zone { background-color: rgba(239, 68, 68, 0.2); border-color: #ef4444; }
+    </style>
+</head>
+<body class="p-4">
+
+    <!-- LOGIN MODAL -->
+    <div id="loginModal" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+        <div class="card p-6 w-96 shadow-2xl">
+            <h2 class="text-lg font-bold text-cyan-400 mb-2">Angel One SmartAPI Login</h2>
+            <p class="text-xs text-slate-400 mb-4">Enter your 6-digit TOTP code to establish secure live market feeds.</p>
+            <input type="password" id="totpInput" placeholder="Enter 6-digit TOTP" maxlength="6" class="w-full bg-slate-900 border border-slate-700 px-3 py-2 rounded text-white text-center text-lg tracking-widest mb-4 focus:outline-none focus:border-cyan-500">
+            <button onclick="submitLogin()" id="loginBtn" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2 rounded transition">Connect Live Stream</button>
+            <div id="loginStatus" class="text-xs text-center mt-3 text-red-400"></div>
+        </div>
+    </div>
+
+    <!-- HEADER NAVIGATION -->
+    <div class="card p-4 mb-4 flex flex-wrap justify-between items-center gap-4">
+        <div>
+            <h1 class="text-xl font-bold text-cyan-400">FIB-PRECISION F&O <span class="text-xs bg-green-600 text-white px-2 py-0.5 rounded">NETLIFY LIVE</span></h1>
+            <p class="text-xs text-slate-400">Strict 4-Level Fib Options & Actionable Strike Recommendation</p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3">
+            <select id="symbolSelect" class="bg-slate-800 border border-slate-700 px-3 py-1.5 rounded text-sm font-bold text-white">
+                <option value="26000">NIFTY SPOT</option>
+                <option value="26009">BANKNIFTY SPOT</option>
+                <option value="26037">FINNIFTY SPOT</option>
+                <option value="26013">MIDCPNIFTY SPOT</option>
+                <option value="51">SENSEX SPOT</option>
+                <option value="52">BANKEX SPOT</option>
+                <option value="2885">RELIANCE</option>
+                <option value="11536">TCS</option>
+                <option value="1594">INFY</option>
+                <option value="3045">SBIN</option>
+                <option value="1333">HDFCBANK</option>
+                <option value="1660">ICICIBANK</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- METRICS CARDS -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+        <div class="card p-4">
+            <span class="text-xs text-slate-400">SELECTED ASSET LTP</span>
+            <div id="spotLTP" class="text-2xl font-bold text-white mt-1">₹ --.--</div>
+            <div id="spotToken" class="text-xs text-cyan-400 mt-1">Token: 26000</div>
+        </div>
+
+        <div class="card p-4">
+            <span class="text-xs text-slate-400">SESSION RANGE</span>
+            <div id="optionRange" class="text-sm font-bold text-yellow-400 mt-2">High: -- | Low: --</div>
+            <div id="lastTickTime" class="text-xs text-slate-500 mt-1">Last Update: Waiting...</div>
+        </div>
+
+        <div class="card p-4">
+            <span class="text-xs text-slate-400">ACTIONABLE STRIKE SIGNAL</span>
+            <div id="actionableSignal" class="text-base font-bold text-cyan-400 mt-1">Scanning...</div>
+            <div id="signalSub" class="text-xs text-slate-400 mt-1">Awaiting touch zone...</div>
+        </div>
+
+        <div class="card p-4">
+            <span class="text-xs text-slate-400">ENGINE STATUS</span>
+            <div id="statusBadge" class="text-sm font-bold text-slate-400 mt-2">WAITING FOR AUTH</div>
+            <div class="text-xs text-slate-500 mt-1">Threshold: ₹1.50</div>
+        </div>
+    </div>
+
+    <!-- CANVAS CHART VISUALIZER -->
+    <div class="card p-4 mb-4">
+        <div class="flex justify-between items-center mb-2">
+            <h2 class="text-md font-bold text-cyan-400">Intraday Candle & Dynamic Fib Ray Visualizer</h2>
+            <span class="text-xs text-slate-400">Fib A (H->L) & Fib B (L->H) Ray Overlay</span>
+        </div>
+        <div class="relative w-full h-64 bg-slate-900 border border-slate-800 rounded flex items-center justify-center">
+            <canvas id="fibChart" class="w-full h-full absolute inset-0"></canvas>
+            <div id="chartPlaceholder" class="text-slate-500 text-sm z-10">Waiting for live tick stream to plot candles...</div>
+        </div>
+    </div>
+
+    <!-- MULTI-ASSET MATRIX & PROXIMITY SUMMARY -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <!-- FIBONACCI LEVEL MATRIX TABLE -->
+        <div class="card p-4">
+            <h2 class="text-md font-bold text-cyan-400 mb-3">STRICT 4-LEVEL FIBONACCI MATRIX</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-slate-800 text-slate-300 text-xs uppercase">
+                        <tr>
+                            <th class="p-2">Ray Level</th>
+                            <th class="p-2">Ratio</th>
+                            <th class="p-2 text-right">Price (₹)</th>
+                            <th class="p-2 text-right">Dist (₹)</th>
+                            <th class="p-2 text-center">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="fibTableBody" class="divide-y divide-slate-800">
+                        <tr><td colspan="5" class="p-4 text-center text-slate-500">Please authenticate via login popup.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- LIVE FIB PROXIMITY SCANNER SUMMARY -->
+        <div class="card p-4">
+            <h2 class="text-md font-bold text-yellow-400 mb-3">⚡ Smart Strike Proximity Scanner</h2>
+            <p class="text-xs text-slate-400 mb-3">Scans all instruments and recommends exact CE/PE strikes at key Fib touch zones.</p>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left">
+                    <thead class="bg-slate-800 text-slate-300 text-xs uppercase">
+                        <tr>
+                            <th class="p-2">Instrument</th>
+                            <th class="p-2 text-right">LTP (₹)</th>
+                            <th class="p-2">Nearest Ray</th>
+                            <th class="p-2 text-center">Actionable Strike</th>
+                        </tr>
+                    </thead>
+                    <tbody id="scannerTableBody" class="divide-y divide-slate-800">
+                        <tr><td colspan="4" class="p-4 text-center text-slate-500">Scanning all assets...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Points directly to your live localtunnel backend URL
+        const BACKEND_URL = 'https://many-tips-hear.loca.lt';
+        
+        const socket = io(BACKEND_URL, {
+            extraHeaders: { "bypass-tunnel-reminder": "true" }
+        });
+
+        let globalStore = {
+            "26000": { symbol: "NIFTY", ltp: 0, high: 0, low: 0, step: 50 },
+            "26009": { symbol: "BANKNIFTY", ltp: 0, high: 0, low: 0, step: 100 },
+            "26037": { symbol: "FINNIFTY", ltp: 0, high: 0, low: 0, step: 50 },
+            "26013": { symbol: "MIDCPNIFTY", ltp: 0, high: 0, low: 0, step: 25 },
+            "51":    { symbol: "SENSEX", ltp: 0, high: 0, low: 0, step: 100 },
+            "52":    { symbol: "BANKEX", ltp: 0, high: 0, low: 0, step: 100 },
+            "2885":  { symbol: "RELIANCE", ltp: 0, high: 0, low: 0, step: 20 },
+            "11536": { symbol: "TCS", ltp: 0, high: 0, low: 0, step: 20 },
+            "1594":  { symbol: "INFY", ltp: 0, high: 0, low: 0, step: 10 },
+            "3045":  { symbol: "SBIN", ltp: 0, high: 0, low: 0, step: 10 },
+            "1333":  { symbol: "HDFCBANK", ltp: 0, high: 0, low: 0, step: 10 },
+            "1660":  { symbol: "ICICIBANK", ltp: 0, high: 0, low: 0, step: 10 }
+        };
+        let selectedToken = "26000";
+
+        async function submitLogin() {
+            const totp = document.getElementById('totpInput').value.trim();
+            const statusDiv = document.getElementById('loginStatus');
+            const btn = document.getElementById('loginBtn');
+
+            if (totp.length !== 6) {
+                statusDiv.innerText = "Please enter a valid 6-digit TOTP.";
+                return;
+            }
+
+            btn.innerText = "Authenticating...";
+            statusDiv.innerText = "";
+
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/login`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'bypass-tunnel-reminder': 'true'
+                    },
+                    body: JSON.stringify({ totp: totp })
+                });
+                const result = await response.json();
+
+                if (result.status) {
+                    document.getElementById('loginModal').style.display = 'none';
+                } else {
+                    statusDiv.innerText = result.message || "Authentication failed.";
+                    btn.innerText = "Connect Live Stream";
+                }
+            } catch (err) {
+                statusDiv.innerText = "Server connection error.";
+                btn.innerText = "Connect Live Stream";
+            }
+        }
+
+        document.getElementById('symbolSelect').addEventListener('change', (e) => {
+            selectedToken = e.target.value;
+            document.getElementById('spotToken').innerText = `Token: ${selectedToken}`;
+            if (globalStore[selectedToken] && globalStore[selectedToken].ltp > 0) {
+                renderAsset(globalStore[selectedToken]);
+            }
+        });
+
+        socket.on('market_tick', (tick) => {
+            let token = tick.token ? String(tick.token) : null;
+            let ltp = tick.last_traded_price ? tick.last_traded_price / 100.0 : null;
+            if (!token || !ltp || !globalStore[token]) return;
+
+            let high = tick.high ? tick.high / 100.0 : ltp * 1.005;
+            let low = tick.low ? tick.low / 100.0 : ltp * 0.995;
+
+            globalStore[token].ltp = ltp;
+            globalStore[token].high = high;
+            globalStore[token].low = low;
+
+            if (token === selectedToken) {
+                renderAsset(globalStore[token]);
+            }
+
+            updateScannerSummary();
+        });
+
+        function renderAsset(data) {
+            document.getElementById('spotLTP').innerText = `₹${data.ltp.toFixed(2)}`;
+            document.getElementById('optionRange').innerText = `High: ₹${data.high.toFixed(2)} \vert{} Low: ₹${data.low.toFixed(2)}`;
+            document.getElementById('lastTickTime').innerText = `Last Update: ${new Date().toLocaleTimeString()}`;
+            
+            updateFibMatrix(data, data.high, data.low, data.ltp);
+            drawChart(data.high, data.low, data.ltp);
+        }
+
+        function calculateFibLevels(H, L) {
+            const diff = H - L;
+            const ratios = [0, 0.236, 1.0, 1.618];
+            let levels = [];
+            
+            ratios.forEach(r => {
+                levels.push({ name: `Fib A (${r})`, price: H - (diff * r), type: 'resistance' });
+                levels.push({ name: `Fib B (${r})`, price: L + (diff * r), type: 'support' });
+            });
+            return levels.sort((a, b) => b.price - a.price);
+        }
+
+        function getATMStrike(ltp, step) {
+            return Math.round(ltp / step) * step;
+        }
+
+        function updateFibMatrix(asset, H, L, ltp) {
+            const levels = calculateFibLevels(H, L);
+            const tbody = document.getElementById('fibTableBody');
+            tbody.innerHTML = '';
+
+            let nearest = levels[0];
+            let minDistance = Math.abs(ltp - levels[0].price);
+
+            levels.forEach(lvl => {
+                const dist = Math.abs(ltp - lvl.price);
+                if (dist < minDistance) {
+                    minDistance = dist;
+                    nearest = lvl;
+                }
+
+                const isTouch = dist <= 1.50;
+                const statusHtml = isTouch 
+                    ? `<span class="bg-red-500/20 text-red-400 text-xs px-2 py-0.5 rounded border border-red-500 font-bold">TOUCH ZONE</span>`
+                    : (dist <= 5.0 ? `<span class="bg-green-500/20 text-green-400 text-xs px-2 py-0.5 rounded">NEAR</span>` : `<span class="text-slate-500 text-xs">ACTIVE</span>`);
+
+                tbody.innerHTML += `
+                    <tr class="${isTouch ? 'touch-zone' : ''}">
+                        <td class="p-2 font-bold text-yellow-400">${lvl.name}</td>
+                        <td class="p-2 text-slate-400">${lvl.name.includes('Fib A') ? 'H->L' : 'L->H'}</td>
+                        <td class="p-2 text-right text-white">₹${lvl.price.toFixed(2)}</td>
+                        <td class="p-2 text-right ${dist <= 5.0 ? 'text-green-400 font-bold' : 'text-slate-300'}">₹${dist.toFixed(2)}</td>
+                        <td class="p-2 text-center">${statusHtml}</td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('nearestFib').innerText = nearest.name;
+            document.getElementById('fibDist').innerText = `Distance: ₹${minDistance.toFixed(2)}`;
+            
+            const strike = getATMStrike(ltp, asset.step);
+            const signalBox = document.getElementById('actionableSignal');
+            const subBox = document.getElementById('signalSub');
+            const badge = document.getElementById('statusBadge');
+
+            if (minDistance <= 1.50) {
+                badge.className = "text-sm font-bold text-red-400 mt-2 animate-pulse";
+                badge.innerText = "🚨 TOUCH ZONE BREACHED";
+
+                if (nearest.price > ltp) {
+                    signalBox.className = "text-base font-bold text-green-400 mt-1";
+                    signalBox.innerText = `BUY ${strike} CE (${asset.symbol})`;
+                    subBox.innerText = `Support bounce at ${nearest.name}`;
+                } else {
+                    signalBox.className = "text-base font-bold text-red-400 mt-1";
+                    signalBox.innerText = `BUY ${strike} PE (${asset.symbol})`;
+                    subBox.innerText = `Resistance rejection at ${nearest.name}`;
+                }
+            } else {
+                badge.className = "text-sm font-bold text-slate-400 mt-2";
+                badge.innerText = "ACTIVE RANGE";
+                signalBox.className = "text-base font-bold text-cyan-400 mt-1";
+                signalBox.innerText = `ATM: ${strike} (${asset.symbol})`;
+                subBox.innerText = `Waiting for ₹1.50 touch`;
+            }
+        }
+
+        function updateScannerSummary() {
+            const tbody = document.getElementById('scannerTableBody');
+            tbody.innerHTML = ``;
+
+            let activeCount = 0;
+            for (let tId in globalStore) {
+                let asset = globalStore[tId];
+                if (asset.ltp <= 0) continue;
+
+                let levels = calculateFibLevels(asset.high, asset.low);
+                let nearest = levels.reduce((prev, curr) => Math.abs(asset.ltp - curr.price) < Math.abs(asset.ltp - prev.price) ? curr : prev);
+                let dist = Math.abs(asset.ltp - nearest.price);
+                let strike = getATMStrike(asset.ltp, asset.step);
+
+                let isTouch = dist <= 1.50;
+                let recHtml = isTouch 
+                    ? (nearest.price > asset.ltp ? `<span class="bg-green-500/20 text-green-400 text-xs px-2 py-0.5 rounded font-bold">BUY ${strike} CE</span>` : `<span class="bg-red-500/20 text-red-400 text-xs px-2 py-0.5 rounded font-bold">BUY ${strike} PE</span>`)
+                    : `<span class="text-slate-500 text-xs">Monitoring</span>`;
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td class="p-2 font-bold text-white">${asset.symbol}</td>
+                        <td class="p-2 text-right text-green-400">₹${asset.ltp.toFixed(2)}</td>
+                        <td class="p-2 text-yellow-400">${nearest.name}</td>
+                        <td class="p-2 text-center">${recHtml}</td>
+                    </tr>
+                `;
+                activeCount++;
+            }
+
+            if (activeCount === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500">Waiting for asset ticks...</td></tr>`;
+            }
+        }
+
+        function drawChart(H, L, ltp) {
+            document.getElementById('chartPlaceholder').style.display = 'none';
+            const canvas = document.getElementById('fibChart');
+            const ctx = canvas.getContext('2d');
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.strokeStyle = '#38bdf8';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(50, canvas.height / 2);
+            ctx.lineTo(canvas.width - 50, canvas.height / 2);
+            ctx.stroke();
+
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = '12px monospace';
+            ctx.fillText(`Active LTP: ₹${ltp.toFixed(2)} | High: ₹${H.toFixed(2)} | Low: ₹${L.toFixed(2)}`, 20, 30);
+        }
+    </script>
+</body>
+</html>
