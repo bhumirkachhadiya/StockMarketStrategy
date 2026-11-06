@@ -68,32 +68,107 @@
             100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
         }
 
-        /* Light mode specific element overrides for crisp contrast */
+        /* =========================================================
+           LIGHT THEME COMPLETE COMPREHENSIVE STYLING
+           ========================================================= */
+
+        /* Typography & High Contrast Text */
+        body.light-theme {
+            background-color: #f1f5f9;
+            color: #0f172a;
+        }
         body.light-theme .text-white { color: #0f172a !important; }
-        body.light-theme .text-slate-400 { color: #334155 !important; }
+        body.light-theme .text-slate-200 { color: #0f172a !important; }
         body.light-theme .text-slate-300 { color: #1e293b !important; }
+        body.light-theme .text-slate-400 { color: #334155 !important; }
         body.light-theme .text-slate-500 { color: #475569 !important; }
-        body.light-theme .bg-slate-900,
-        body.light-theme .bg-slate-950 { background-color: #f8fafc !important; border-color: #cbd5e1 !important; color: #0f172a !important; }
-        body.light-theme .bg-slate-900\/60,
-        body.light-theme .bg-slate-900\/80,
-        body.light-theme .bg-slate-900\/90,
-        body.light-theme .bg-slate-950\/80 { background-color: rgba(248, 250, 252, 0.95) !important; color: #0f172a !important; }
-        body.light-theme .bg-slate-900\/40 { background-color: #f1f5f9 !important; border: 1px solid #e2e8f0; }
-        body.light-theme .border-slate-800,
-        body.light-theme .border-slate-700,
-        body.light-theme .border-slate-900 { border-color: #cbd5e1 !important; }
-        body.light-theme .strike-sticky { background-color: #e2e8f0 !important; color: #0f172a !important; font-weight: 800; border-left: 1px solid #cbd5e1; border-right: 1px solid #cbd5e1; }
-        body.light-theme input,
-        body.light-theme select {
+
+        /* Terminal Cards & Layout Containers */
+        body.light-theme .terminal-card {
             background-color: #ffffff !important;
+            border-color: #cbd5e1 !important;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+        }
+        body.light-theme .terminal-header {
+            background: #ffffff !important;
+            border-color: #cbd5e1 !important;
+        }
+
+        /* Slate Utility Background Overrides */
+        body.light-theme .bg-slate-950,
+        body.light-theme .bg-slate-900,
+        body.light-theme .bg-slate-800,
+        body.light-theme .bg-slate-950\/70,
+        body.light-theme .bg-slate-950\/80,
+        body.light-theme .bg-slate-950\/60,
+        body.light-theme .bg-slate-950\/40,
+        body.light-theme .bg-slate-950\/30,
+        body.light-theme .bg-slate-900\/90,
+        body.light-theme .bg-slate-900\/80,
+        body.light-theme .bg-slate-900\/60,
+        body.light-theme .bg-slate-900\/40,
+        body.light-theme .bg-cyan-950,
+        body.light-theme .bg-cyan-950\/80,
+        body.light-theme .bg-cyan-950\/60 {
+            background-color: #f8fafc !important;
             border-color: #cbd5e1 !important;
             color: #0f172a !important;
         }
-        body.light-theme .divide-slate-800,
-        body.light-theme .divide-slate-800\/60 {
-            border-color: #e2e8f0 !important;
+
+        body.light-theme .border-slate-800,
+        body.light-theme .border-slate-700,
+        body.light-theme .border-slate-900,
+        body.light-theme .border-cyan-900\/40,
+        body.light-theme .border-cyan-800\/80,
+        body.light-theme .border-slate-800\/80,
+        body.light-theme .border-slate-800\/60 {
+            border-color: #cbd5e1 !important;
         }
+
+        /* Top Header Pills & Action Buttons */
+        body.light-theme #marketStatusPill {
+            background-color: #f8fafc !important;
+            border-color: #cbd5e1 !important;
+        }
+        body.light-theme #marketStatusLabel {
+            color: #0f172a !important;
+        }
+        body.light-theme #istClock {
+            background-color: #f8fafc !important;
+            border-color: #cbd5e1 !important;
+            color: #334155 !important;
+        }
+        body.light-theme #themeToggleBtn {
+            background-color: #f8fafc !important;
+            border-color: #cbd5e1 !important;
+            color: #0f172a !important;
+        }
+        body.light-theme #themeToggleBtn:hover {
+            background-color: #f1f5f9 !important;
+        }
+        body.light-theme button[onclick*="openHelpGuideModal"] {
+            background-color: #e0f2fe !important;
+            border-color: #7dd3fc !important;
+            color: #0284c7 !important;
+        }
+        body.light-theme button[onclick*="openHelpGuideModal"]:hover {
+            background-color: #bae6fd !important;
+        }
+        body.light-theme button[onclick*="openSettingsModal"] {
+            background-color: #f8fafc !important;
+            border-color: #cbd5e1 !important;
+            color: #0f172a !important;
+        }
+        body.light-theme button[onclick*="openSettingsModal"]:hover {
+            background-color: #f1f5f9 !important;
+        }
+        body.light-theme #authStatusBadge {
+            background-color: #fef2f2 !important;
+            border-color: #fca5a5 !important;
+            color: #dc2626 !important;
+        }
+
+        /* Indices Strip Pills */
         body.light-theme #indicesTickerStrip > div {
             background-color: #ffffff !important;
             border-color: #cbd5e1 !important;
@@ -105,65 +180,257 @@
             font-weight: 700;
         }
 
-        /* Documentation Guide Styles */
-        .guide-nav-btn.active {
-            background-color: #0284c7 !important;
-            color: #ffffff !important;
-            font-weight: 700;
-        }
-        body.light-theme .guide-nav-btn {
-            color: #334155;
-        }
-        body.light-theme .guide-nav-btn:hover {
-            background-color: #f1f5f9;
-        }
-        body.light-theme .guide-nav-btn.active {
-            background-color: #0284c7 !important;
-            color: #ffffff !important;
-        }
-        body.light-theme .guide-card {
-            background-color: #ffffff !important;
-            border-color: #cbd5e1 !important;
-        }
-        body.light-theme .guide-modal-box {
+        /* Form Inputs & Selects */
+        body.light-theme input,
+        body.light-theme select {
             background-color: #ffffff !important;
             border-color: #cbd5e1 !important;
             color: #0f172a !important;
         }
+        body.light-theme input::placeholder {
+            color: #94a3b8 !important;
+        }
+
+        /* Timeframe Buttons */
+        body.light-theme #tf-1m,
+        body.light-theme #tf-3m,
+        body.light-theme #tf-5m,
+        body.light-theme #tf-15m,
+        body.light-theme #tf-30m,
+        body.light-theme #tf-1h,
+        body.light-theme #tf-1d {
+            color: #475569 !important;
+        }
+        body.light-theme #tf-1m:hover,
+        body.light-theme #tf-3m:hover,
+        body.light-theme #tf-5m:hover,
+        body.light-theme #tf-15m:hover,
+        body.light-theme #tf-30m:hover,
+        body.light-theme #tf-1h:hover,
+        body.light-theme #tf-1d:hover {
+            color: #0f172a !important;
+            background-color: #e2e8f0 !important;
+        }
+        body.light-theme #tf-1m.bg-cyan-700,
+        body.light-theme #tf-3m.bg-cyan-700,
+        body.light-theme #tf-5m.bg-cyan-700,
+        body.light-theme #tf-15m.bg-cyan-700,
+        body.light-theme #tf-30m.bg-cyan-700,
+        body.light-theme #tf-1h.bg-cyan-700,
+        body.light-theme #tf-1d.bg-cyan-700 {
+            background-color: #0284c7 !important;
+            color: #ffffff !important;
+        }
+
+        /* Option Chain Matrix in Light Mode */
+        body.light-theme #view-chain-panel table thead {
+            background-color: #f1f5f9 !important;
+            border-bottom: 2px solid #cbd5e1 !important;
+        }
+        body.light-theme #view-chain-panel table thead tr th {
+            color: #0f172a !important;
+            border-color: #cbd5e1 !important;
+        }
+        body.light-theme #view-chain-panel table thead tr:first-child th:first-child {
+            background-color: #ecfdf5 !important;
+            color: #065f46 !important;
+        }
+        body.light-theme #view-chain-panel table thead tr:first-child th:last-child {
+            background-color: #fef2f2 !important;
+            color: #991b1b !important;
+        }
+        body.light-theme .strike-sticky {
+            background-color: #f8fafc !important;
+            color: #0f172a !important;
+            font-weight: 800 !important;
+            border-left: 1px solid #cbd5e1 !important;
+            border-right: 1px solid #cbd5e1 !important;
+        }
+        body.light-theme #optionChainBody tr:hover {
+            background-color: #f1f5f9 !important;
+        }
+        body.light-theme #optionChainBody td {
+            border-bottom: 1px solid #e2e8f0 !important;
+            color: #0f172a !important;
+        }
+        body.light-theme .itm-call {
+            background-color: rgba(16, 185, 129, 0.12) !important;
+            color: #065f46 !important;
+        }
+        body.light-theme .itm-put {
+            background-color: rgba(239, 68, 68, 0.12) !important;
+            color: #991b1b !important;
+        }
+        body.light-theme .atm-row {
+            background-color: #e0f2fe !important;
+            border-top: 2px solid #0284c7 !important;
+            border-bottom: 2px solid #0284c7 !important;
+        }
+        body.light-theme .atm-row .strike-sticky {
+            background-color: #e0f2fe !important;
+            color: #0284c7 !important;
+        }
+
+        /* 6-Level Strategy Table */
+        body.light-theme #strategyLevelsTableBody tr {
+            border-bottom: 1px solid #e2e8f0 !important;
+        }
+        body.light-theme #strategyLevelsTableBody td {
+            color: #0f172a !important;
+        }
+
+        /* Scanner Panel in Light Mode */
+        body.light-theme #scannerCountBadge {
+            background-color: #e0f2fe !important;
+            border-color: #7dd3fc !important;
+            color: #0284c7 !important;
+        }
+        body.light-theme #scannerSearch {
+            background-color: #ffffff !important;
+            border-color: #cbd5e1 !important;
+            color: #0f172a !important;
+        }
+        body.light-theme #filterDirection,
+        body.light-theme #filterStatus {
+            background-color: #ffffff !important;
+            border-color: #cbd5e1 !important;
+            color: #0f172a !important;
+        }
+        body.light-theme #scannerTableBody tr {
+            border-bottom: 1px solid #e2e8f0 !important;
+            color: #0f172a !important;
+        }
+        body.light-theme #scannerTableBody tr:hover {
+            background-color: #f1f5f9 !important;
+        }
+        body.light-theme #scannerTableBody td {
+            color: #0f172a !important;
+        }
+
+        /* Settings and Login Modals in Light Mode */
+        body.light-theme #helpGuideModal,
+        body.light-theme #settingsModal,
+        body.light-theme #loginModal {
+            background-color: rgba(15, 23, 42, 0.45) !important;
+        }
+        body.light-theme #settingsModal .terminal-card,
+        body.light-theme #loginModal .terminal-card {
+            background-color: #ffffff !important;
+            border-color: #cbd5e1 !important;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Multilingual Guide Modal in Light Mode */
+        body.light-theme .guide-modal-box {
+            background-color: #ffffff !important;
+            border-color: #cbd5e1 !important;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15) !important;
+        }
+        body.light-theme .guide-modal-header {
+            background-color: #f8fafc !important;
+            border-bottom: 1px solid #e2e8f0 !important;
+        }
+        body.light-theme .guide-modal-header h3 {
+            color: #0f172a !important;
+        }
+        body.light-theme .guide-modal-header p {
+            color: #64748b !important;
+        }
+        body.light-theme #guideLangSelector {
+            background-color: #f1f5f9 !important;
+            border: 1px solid #cbd5e1 !important;
+        }
+        body.light-theme .guide-lang-btn {
+            color: #475569 !important;
+        }
+        body.light-theme .guide-lang-btn:hover {
+            background-color: #e2e8f0 !important;
+            color: #0f172a !important;
+        }
+        body.light-theme .guide-lang-btn.active {
+            background-color: #0284c7 !important;
+            color: #ffffff !important;
+        }
+        body.light-theme .guide-close-btn {
+            color: #64748b !important;
+        }
+        body.light-theme .guide-close-btn:hover {
+            background-color: #e2e8f0 !important;
+            color: #0f172a !important;
+        }
+        body.light-theme .guide-modal-search {
+            background-color: #f8fafc !important;
+            border-bottom: 1px solid #e2e8f0 !important;
+        }
+        body.light-theme #guideSearchInput {
+            background-color: #ffffff !important;
+            border-color: #cbd5e1 !important;
+            color: #0f172a !important;
+        }
+        body.light-theme #guideMobileSectionSelect {
+            background-color: #ffffff !important;
+            border-color: #cbd5e1 !important;
+            color: #0284c7 !important;
+        }
         body.light-theme #guideSidebar {
             background-color: #f8fafc !important;
-            border-right-color: #cbd5e1 !important;
+            border-right: 1px solid #e2e8f0 !important;
         }
         body.light-theme .guide-nav-item {
             color: #334155 !important;
         }
         body.light-theme .guide-nav-item:hover {
-            background-color: #f1f5f9 !important;
+            background-color: #e2e8f0 !important;
             color: #0f172a !important;
         }
+        body.light-theme .guide-nav-item.active,
         body.light-theme .guide-nav-item.bg-cyan-700 {
             background-color: #0284c7 !important;
             color: #ffffff !important;
         }
-        body.light-theme .guide-box-card {
+        body.light-theme #guideContentBody {
+            background-color: #ffffff !important;
+            color: #0f172a !important;
+        }
+        body.light-theme .guide-card {
             background-color: #ffffff !important;
             border-color: #cbd5e1 !important;
+        }
+        body.light-theme .guide-box-card {
+            background-color: #ffffff !important;
+            border: 1px solid #cbd5e1 !important;
             color: #0f172a !important;
         }
         body.light-theme .guide-box-tip {
             background-color: #f0fdf4 !important;
-            border-color: #86efac !important;
+            border: 1px solid #86efac !important;
             color: #14532d !important;
         }
         body.light-theme .guide-box-warn {
             background-color: #fef2f2 !important;
-            border-color: #fca5a5 !important;
+            border: 1px solid #fca5a5 !important;
             color: #7f1d1d !important;
         }
         body.light-theme .guide-box-info {
             background-color: #f0f9ff !important;
-            border-color: #7dd3fc !important;
+            border: 1px solid #7dd3fc !important;
             color: #0c4a6e !important;
+        }
+        body.light-theme .guide-modal-footer {
+            background-color: #f8fafc !important;
+            border-top: 1px solid #e2e8f0 !important;
+        }
+        body.light-theme .guide-footer-btn {
+            background-color: #f1f5f9 !important;
+            border: 1px solid #cbd5e1 !important;
+            color: #1e293b !important;
+        }
+        body.light-theme .guide-footer-btn:hover {
+            background-color: #e2e8f0 !important;
+            color: #0f172a !important;
+        }
+        body.light-theme #guideSectionCounter {
+            color: #64748b !important;
         }
 
         /* Custom scrollbar */
@@ -583,7 +850,7 @@
         <div class="terminal-card guide-modal-box p-0 w-full max-w-5xl h-[92vh] max-h-[820px] flex flex-col shadow-2xl border-cyan-800/80 overflow-hidden" onclick="event.stopPropagation()">
             
             <!-- GUIDE HEADER WITH LANGUAGE SELECTOR -->
-            <div class="p-3 sm:p-4 border-b border-slate-800 flex flex-wrap items-center justify-between gap-3 bg-slate-950/70">
+            <div class="guide-modal-header p-3 sm:p-4 border-b border-slate-800 flex flex-wrap items-center justify-between gap-3 bg-slate-950/70">
                 <div class="flex items-center gap-2.5">
                     <div class="w-8 h-8 rounded bg-cyan-600/20 border border-cyan-500/60 flex items-center justify-center text-cyan-400 shrink-0">
                         <i data-lucide="book-open" class="w-4 h-4"></i>
@@ -610,7 +877,7 @@
             </div>
 
             <!-- SEARCH BAR & MOBILE SECTION SELECTOR -->
-            <div class="px-3 sm:px-4 py-2 border-b border-slate-800 bg-slate-900/40 flex flex-wrap items-center justify-between gap-2">
+            <div class="guide-modal-search px-3 sm:px-4 py-2 border-b border-slate-800 bg-slate-900/40 flex flex-wrap items-center justify-between gap-2">
                 <!-- Search Input -->
                 <div class="relative flex-1 min-w-[200px]">
                     <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5 pointer-events-none"></i>
@@ -639,8 +906,8 @@
             </div>
 
             <!-- GUIDE FOOTER: PREV / NEXT BUTTONS -->
-            <div class="p-3 border-t border-slate-800 bg-slate-950/70 flex items-center justify-between text-xs">
-                <button id="guidePrevBtn" onclick="navigateGuide(-1)" class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 transition font-bold disabled:opacity-40 disabled:cursor-not-allowed">
+            <div class="guide-modal-footer p-3 border-t border-slate-800 bg-slate-950/70 flex items-center justify-between text-xs">
+                <button id="guidePrevBtn" onclick="navigateGuide(-1)" class="guide-footer-btn flex items-center gap-1.5 px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 transition font-bold disabled:opacity-40 disabled:cursor-not-allowed">
                     <i data-lucide="chevron-left" class="w-4 h-4"></i>
                     <span id="guidePrevLabel">Previous</span>
                 </button>
@@ -654,7 +921,7 @@
                         <span id="guideNextLabel">Next</span>
                         <i data-lucide="chevron-right" class="w-4 h-4"></i>
                     </button>
-                    <button onclick="closeHelpGuideModal()" class="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition text-xs font-semibold">
+                    <button onclick="closeHelpGuideModal()" class="guide-footer-btn px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition text-xs font-semibold">
                         <span id="guideCloseLabel">Close</span>
                     </button>
                 </div>
@@ -1845,9 +2112,9 @@
                 const btn = document.getElementById(`langBtn-${l}`);
                 if (btn) {
                     if (l === currentGuideLang) {
-                        btn.className = "guide-lang-btn px-2.5 py-1 text-xs font-bold rounded transition bg-cyan-600 text-white shadow-sm";
+                        btn.className = "guide-lang-btn active px-2.5 py-1 text-xs font-bold rounded transition bg-cyan-600 text-white shadow-sm";
                     } else {
-                        btn.className = "guide-lang-btn px-2.5 py-1 text-xs font-semibold rounded transition text-slate-400 hover:text-white hover:bg-slate-800";
+                        btn.className = "guide-lang-btn px-2.5 py-1 text-xs font-semibold rounded transition";
                     }
                 }
             });
@@ -1858,7 +2125,7 @@
                 sidebar.innerHTML = data.sections.map(sec => {
                     const isActive = sec.id === currentGuideSectionId;
                     return `
-                        <button onclick="selectGuideSection('${sec.id}')" class="guide-nav-item w-full flex items-center gap-2 px-2.5 py-2 rounded text-left text-xs transition ${isActive ? 'bg-cyan-700 text-white font-bold shadow' : 'text-slate-400 hover:text-white hover:bg-slate-900'}">
+                        <button onclick="selectGuideSection('${sec.id}')" class="guide-nav-item ${isActive ? 'active bg-cyan-700 text-white font-bold shadow' : ''} w-full flex items-center gap-2 px-2.5 py-2 rounded text-left text-xs transition">
                             <i data-lucide="${sec.icon}" class="w-4 h-4 shrink-0"></i>
                             <span class="truncate">${sec.short_title}</span>
                         </button>
