@@ -363,22 +363,41 @@ class FibonacciEngine:
         option_type: str = "CE"
     ) -> Dict[str, Any]:
         """
-        Calculate exact strategy price levels for an individual Option Contract.
-        Entry, SL, and Targets correspond to the option contract's own premium range.
+        Calculate exact strategy price levels for an individual Option Contract (CE/PE)
+        strictly using the 4-level Fibonacci model (0, 0.236, 1.0, 1.618) derived from
+        Previous Day High (H) and Previous Day Low (L):
+        
+        Fib A (H -> L): H - (diff * r)
+        Fib B (L -> H): L + (diff * r)
+
+        The 6 distinct levels on the chart from Top to Bottom:
+        1. Ratio 1.618 (Up Expansion / Target 4):  Low + (diff * 1.618)
+        2. Ratio 1.000 (Prev Day High / Target 3): High
+        3. Ratio 0.236 (Pullback from High / T2):  High - (diff * 0.236)
+        4. Ratio 0.236 (Bounce from Low / Entry):  Low + (diff * 0.236)
+        5. Ratio 0.000 (Prev Day Low / Stop Loss): Low
+        6. Ratio 1.618 (Down Extension):           High - (diff * 1.618)
         """
         opt_ltp = max(option_ltp, 1.0)
-        opt_high = option_high if (option_high and option_high > opt_ltp) else round(opt_ltp * 1.15, 2)
-        opt_low = option_low if (option_low and option_low < opt_ltp and option_low > 0) else round(opt_ltp * 0.85, 2)
-        diff = max(opt_high - opt_low, opt_ltp * 0.10)
+        opt_high = option_high if (option_high and option_high > 0) else round(opt_ltp * 1.15, 2)
+        opt_low = option_low if (option_low and option_low > 0 and option_low < opt_high) else round(opt_ltp * 0.85, 2)
+        diff = max(opt_high - opt_low, opt_high * 0.01)
 
-        # In option buying, direction is Long
+        # Exact 6 mathematical levels from top to bottom:
+        level_top_1618 = round(opt_low + (diff * 1.618), 2)
+        level_1 = round(opt_high, 2)
+        level_top_0236 = round(opt_high - (diff * 0.236), 2)
+        level_bottom_0236 = round(opt_low + (diff * 0.236), 2)
+        level_0 = round(opt_low, 2)
+        level_bottom_1618 = round(max(opt_high - (diff * 1.618), 0.05), 2)
+
+        # Trade setup mapping
         entry = round(opt_ltp, 2)
-        # 15% risk / Stop Loss
-        stop_loss = round(max(entry - (diff * 0.5), entry * 0.80), 2)
-        target_1 = round(entry + (diff * 0.618), 2)
-        target_2 = round(entry + diff, 2)
-        target_3 = round(entry + (diff * 1.618), 2)
-        target_4 = round(entry + (diff * 2.618), 2)
+        stop_loss = round(level_0, 2)
+        target_1 = round(level_top_0236 if opt_ltp < level_top_0236 else level_1, 2)
+        target_2 = round(level_1 if opt_ltp < level_1 else level_top_1618, 2)
+        target_3 = round(level_top_1618, 2)
+        target_4 = round(level_top_1618 + (diff * 0.618), 2)
 
         sl_hit = opt_ltp <= stop_loss
         t1_hit = opt_ltp >= target_1
@@ -386,38 +405,42 @@ class FibonacciEngine:
         t3_hit = opt_ltp >= target_3
         t4_hit = opt_ltp >= target_4
 
+        # 6 Horizontal Price Lines spanning the chart
         strategy_levels = [
             {
-                "name": "Stop Loss (SL)", "code": "SL", "price": stop_loss, "color": "#ef4444", "lineStyle": "dashed",
-                "distance": round(abs(opt_ltp - stop_loss), 2), "distance_pct": round(abs(opt_ltp - stop_loss) / opt_ltp * 100.0, 2),
+                "name": "1.618 Target 4 (Expansion)", "code": "1.618", "price": level_top_1618, "ratio": 1.618, "color": "#3b82f6", "lineStyle": "solid",
+                "distance": round(abs(opt_ltp - level_top_1618), 2), "distance_pct": round(abs(opt_ltp - level_top_1618) / opt_ltp * 100.0, 2),
+                "is_hit": t4_hit, "hit_status": "Achieved" if t4_hit else "Pending"
+            },
+            {
+                "name": "1.000 Target 3 (Prev Day High)", "code": "1.000", "price": level_1, "ratio": 1.0, "color": "#06b6d4", "lineStyle": "solid",
+                "distance": round(abs(opt_ltp - level_1), 2), "distance_pct": round(abs(opt_ltp - level_1) / opt_ltp * 100.0, 2),
+                "is_hit": t2_hit if opt_ltp < level_top_0236 else t1_hit, "hit_status": "Achieved" if (t2_hit if opt_ltp < level_top_0236 else t1_hit) else "Pending"
+            },
+            {
+                "name": "0.236 Target 2 (High Pullback)", "code": "0.236", "price": level_top_0236, "ratio": 0.236, "color": "#10b981", "lineStyle": "solid",
+                "distance": round(abs(opt_ltp - level_top_0236), 2), "distance_pct": round(abs(opt_ltp - level_top_0236) / opt_ltp * 100.0, 2),
+                "is_hit": t1_hit if opt_ltp < level_top_0236 else opt_ltp >= level_top_0236, "hit_status": "Achieved" if (t1_hit if opt_ltp < level_top_0236 else opt_ltp >= level_top_0236) else "Pending"
+            },
+            {
+                "name": "0.236 Entry (Low Bounce)", "code": "0.236", "price": level_bottom_0236, "ratio": 0.236, "color": "#eab308", "lineStyle": "solid",
+                "distance": round(abs(opt_ltp - level_bottom_0236), 2), "distance_pct": round(abs(opt_ltp - level_bottom_0236) / opt_ltp * 100.0, 2),
+                "is_hit": opt_ltp >= level_bottom_0236, "hit_status": "Triggered" if opt_ltp >= level_bottom_0236 else "Pending"
+            },
+            {
+                "name": "0.000 Stop Loss (Prev Day Low)", "code": "0.000", "price": level_0, "ratio": 0.0, "color": "#ef4444", "lineStyle": "dashed",
+                "distance": round(abs(opt_ltp - level_0), 2), "distance_pct": round(abs(opt_ltp - level_0) / opt_ltp * 100.0, 2),
                 "is_hit": sl_hit, "hit_status": "Hit" if sl_hit else "Pending"
             },
             {
-                "name": "Entry Price", "code": "ENTRY", "price": entry, "color": "#eab308", "lineStyle": "solid",
-                "distance": 0.0, "distance_pct": 0.0,
-                "is_hit": True, "hit_status": "Active"
-            },
-            {
-                "name": "Target 1 (T1)", "code": "T1", "price": target_1, "color": "#22c55e", "lineStyle": "dashed",
-                "distance": round(abs(opt_ltp - target_1), 2), "distance_pct": round(abs(opt_ltp - target_1) / opt_ltp * 100.0, 2),
-                "is_hit": t1_hit, "hit_status": "Achieved" if t1_hit else "Pending"
-            },
-            {
-                "name": "Target 2 (T2)", "code": "T2", "price": target_2, "color": "#10b981", "lineStyle": "solid",
-                "distance": round(abs(opt_ltp - target_2), 2), "distance_pct": round(abs(opt_ltp - target_2) / opt_ltp * 100.0, 2),
-                "is_hit": t2_hit, "hit_status": "Achieved" if t2_hit else "Pending"
-            },
-            {
-                "name": "Target 3 (T3)", "code": "T3", "price": target_3, "color": "#06b6d4", "lineStyle": "solid",
-                "distance": round(abs(opt_ltp - target_3), 2), "distance_pct": round(abs(opt_ltp - target_3) / opt_ltp * 100.0, 2),
-                "is_hit": t3_hit, "hit_status": "Achieved" if t3_hit else "Pending"
-            },
-            {
-                "name": "Target 4 (T4)", "code": "T4", "price": target_4, "color": "#3b82f6", "lineStyle": "solid",
-                "distance": round(abs(opt_ltp - target_4), 2), "distance_pct": round(abs(opt_ltp - target_4) / opt_ltp * 100.0, 2),
-                "is_hit": t4_hit, "hit_status": "Achieved" if t4_hit else "Pending"
+                "name": "1.618 Downside Extension", "code": "1.618", "price": level_bottom_1618, "ratio": 1.618, "color": "#9333ea", "lineStyle": "dashed",
+                "distance": round(abs(opt_ltp - level_bottom_1618), 2), "distance_pct": round(abs(opt_ltp - level_bottom_1618) / opt_ltp * 100.0, 2),
+                "is_hit": opt_ltp <= level_bottom_1618, "hit_status": "Hit" if opt_ltp <= level_bottom_1618 else "Pending"
             }
         ]
+
+        pnl_points = round(opt_ltp - entry, 2)
+        pnl_pct = round((pnl_points / entry) * 100.0, 2) if entry > 0 else 0.0
 
         return {
             "symbol": symbol,
@@ -426,17 +449,17 @@ class FibonacciEngine:
             "low": opt_low,
             "direction": "LONG",
             "option_type": option_type,
-            "setup_type": "Option Momentum Ray",
+            "setup_type": "Option Fibonacci Ray",
             "entry": entry,
             "stop_loss": stop_loss,
             "target_1": target_1,
             "target_2": target_2,
             "target_3": target_3,
             "target_4": target_4,
-            "pnl_points": 0.0,
-            "pnl_pct": 0.0,
-            "next_target_name": "Target 1",
-            "dist_to_next_target": round(target_1 - opt_ltp, 2),
-            "dist_to_sl": round(opt_ltp - stop_loss, 2),
+            "pnl_points": pnl_points,
+            "pnl_pct": pnl_pct,
+            "next_target_name": "Target 1" if not t1_hit else ("Target 2" if not t2_hit else "Target 3"),
+            "dist_to_next_target": round(abs(target_1 - opt_ltp), 2),
+            "dist_to_sl": round(abs(opt_ltp - stop_loss), 2),
             "strategy_levels": strategy_levels
         }
