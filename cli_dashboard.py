@@ -1,34 +1,41 @@
-﻿import time
+import time
+import os
+import threading
 from rich.live import Live
 from rich.layout import Layout
 from rich.panel import Panel
 from rich.table import Table
 from rich.console import Console
-from SmartApi import SmartConnect
-from SmartApi.smartWebSocketV2 import SmartWebSocketV2
-import threading
 
-# --- UPDATE YOUR ANGEL ONE CREDENTIALS HERE ---
-API_KEY = "MRx8rHZh"
-CLIENT_ID = "AAAA492357"
-PIN = "6405"
+from fib_engine import FibonacciEngine
+from angel_service import AngelService
+from instrument_manager import InstrumentManager
+
+# Use centralized AngelService and InstrumentManager
+angel_service = AngelService()
+instrument_mgr = InstrumentManager()
 
 live_market_store = {
-    "26000": {"symbol": "NIFTY SPOT", "ltp": 22450.00, "high": 22520.00, "low": 22380.00},
-    "26009": {"symbol": "BANKNIFTY SPOT", "ltp": 47800.00, "high": 48150.00, "low": 47620.00},
-    "2885":  {"symbol": "RELIANCE SPOT", "ltp": 2880.00, "high": 2910.00, "low": 2855.00},
-    "11536": {"symbol": "TCS SPOT", "ltp": 3950.00, "high": 3980.00, "low": 3920.00},
-    "1594":  {"symbol": "INFY SPOT", "ltp": 1620.00, "high": 1640.00, "low": 1605.00}
+    "26000": {"symbol": "NIFTY", "name": "NIFTY 50", "ltp": 24150.00, "high": 24220.00, "low": 24080.00, "step": 50},
+    "26009": {"symbol": "BANKNIFTY", "name": "BANK NIFTY", "ltp": 51200.00, "high": 51450.00, "low": 50950.00, "step": 100},
+    "26037": {"symbol": "FINNIFTY", "name": "FIN NIFTY", "ltp": 23800.00, "high": 23920.00, "low": 23690.00, "step": 50},
+    "2885":  {"symbol": "RELIANCE", "name": "RELIANCE", "ltp": 1320.00, "high": 1332.00, "low": 1312.00, "step": 20},
+    "11536": {"symbol": "TCS", "name": "TCS", "ltp": 4120.00, "high": 4150.00, "low": 4095.00, "step": 20},
+    "1594":  {"symbol": "INFY", "name": "INFY", "ltp": 1840.00, "high": 1858.00, "low": 1828.00, "step": 10},
+    "3045":  {"symbol": "SBIN", "name": "SBIN", "ltp": 820.00, "high": 828.00, "low": 814.00, "step": 10},
+    "1333":  {"symbol": "HDFCBANK", "name": "HDFCBANK", "ltp": 1740.00, "high": 1755.00, "low": 1730.00, "step": 10}
 }
 
-def calculate_fib_levels(H, L):
-    diff = H - L
-    ratios = [0, 0.236, 1.0, 1.618]
-    levels = []
-    for r in ratios:
-        levels.append({"name": f"Fib A ({r})", "price": round(H - (diff * r), 2)})
-        levels.append({"name": f"Fib B ({r})", "price": round(L + (diff * r), 2)})
-    return sorted(levels, key=lambda x: x["price"], reverse=True)
+def on_tick(tick):
+    tok = str(tick.get("token"))
+    if tok in live_market_store:
+        live_market_store[tok]["ltp"] = tick.get("ltp", live_market_store[tok]["ltp"])
+        if tick.get("high", 0) > 0:
+            live_market_store[tok]["high"] = tick["high"]
+        if tick.get("low", 0) > 0:
+            live_market_store[tok]["low"] = tick["low"]
+
+angel_service.register_tick_callback(on_tick)
 
 def generate_layout():
     layout = Layout()
@@ -37,70 +44,57 @@ def generate_layout():
         Layout(name="main", ratio=1)
     )
     
+    auth_str = "[bold green]CONNECTED[/bold green]" if angel_service.is_authenticated else "[bold red]DISCONNECTED[/bold red]"
     layout["header"].update(
-        Panel("[bold cyan]FIB-PRECISION F&O INDIA - LIVE MULTI-INSTRUMENT MATRIX[/bold cyan]", style="bold white on blue")
+        Panel(f"[bold cyan]FIB-PRECISION F&O INDIA - LIVE MULTI-INSTRUMENT MATRIX[/bold cyan] | SmartAPI: {auth_str}", style="bold white on blue")
     )
 
     table = Table(title="Live Multi-Instrument Fibonacci Level Matrix", expand=True)
     table.add_column("Token", style="dim")
     table.add_column("Symbol / Instrument", style="bold white")
     table.add_column("Live LTP (₹)", justify="right", style="bold green")
-    table.add_column("Prev High (₹)", justify="right", style="blue")
-    table.add_column("Prev Low (₹)", justify="right", style="purple")
-    table.add_column("Nearest Fib Level", justify="center", style="yellow")
-    table.add_column("Level Price (₹)", justify="right")
+    table.add_column("Direction", justify="center")
+    table.add_column("Actionable", justify="center", style="yellow")
+    table.add_column("Entry (₹)", justify="right", style="yellow")
+    table.add_column("Stop Loss (₹)", justify="right", style="red")
+    table.add_column("Target 1 (₹)", justify="right", style="green")
+    table.add_column("Target 2 (₹)", justify="right", style="emerald")
     table.add_column("Distance (₹)", justify="right")
     table.add_column("Status", justify="center")
 
     for token, item in live_market_store.items():
-        fibs = calculate_fib_levels(item["high"], item["low"])
-        nearest = min(fibs, key=lambda f: abs(item["ltp"] - f["price"]))
-        dist = abs(item["ltp"] - nearest["price"])
-        status = "[bold red]TOUCH ZONE[/bold red]" if dist <= 1.50 else ("[bold green]NEAR[/bold green]" if dist <= 5.0 else "[dim]ACTIVE[/dim]")
+        res = FibonacciEngine.evaluate_strategy(
+            symbol=item["symbol"],
+            ltp=item["ltp"],
+            high=item["high"],
+            low=item["low"],
+            strike_step=item.get("step", 50)
+        )
+        
+        status_style = "[bold red]TOUCH ZONE[/bold red]" if "NEAR_ENTRY" in res["status"] or "ENTRY_TRIGGERED" in res["status"] else (
+            "[bold green]TARGET HIT[/bold green]" if "TARGET" in res["status"] else "[dim]WAITING[/dim]"
+        )
+
+        dir_style = "[bold green]BULLISH (CE)[/bold green]" if res["direction"] == "BULLISH" else "[bold red]BEARISH (PE)[/bold red]"
         
         table.add_row(
             token,
             item["symbol"],
-            f"₹{item['ltp']:.2f}",
-            f"₹{item['high']:.2f}",
-            f"₹{item['low']:.2f}",
-            nearest["name"],
-            f"₹{nearest['price']:.2f}",
-            f"₹{dist:.2f}",
-            status
+            f"₹{res['ltp']:.2f}",
+            dir_style,
+            res["action_label"],
+            f"₹{res['entry']:.2f}",
+            f"₹{res['stop_loss']:.2f}",
+            f"₹{res['target_1']:.2f}",
+            f"₹{res['target_2']:.2f}",
+            f"₹{res['distance_entry']:.2f}",
+            status_style
         )
 
     layout["main"].update(Panel(table, border_style="cyan"))
     return layout
 
-def init_angel_one():
-    global live_market_store
-    try:
-        obj = SmartConnect(api_key=API_KEY)
-        data = obj.generateSession(CLIENT_ID, PIN)
-        if data and data.get('status'):
-            auth_token = data['data']['jwtToken']
-            feed_token = obj.feedToken
-            sws = SmartWebSocketV2(auth_token, CLIENT_ID, API_KEY, feed_token)
-
-            def on_data(wsclass, message):
-                if 'token' in message and 'last_traded_price' in message:
-                    tok = str(message['token'])
-                    if tok in live_market_store:
-                        live_market_store[tok]['ltp'] = message['last_traded_price'] / 100.0
-
-            def on_open(wsclass):
-                tokens = list(live_market_store.keys())
-                sws.subscribe(correlation_id="terminal_stream", mode=1, token_list=[{"exchangeType": 1, "tokens": tokens}])
-
-            sws._on_open = on_open
-            sws._on_data = on_data
-            threading.Thread(target=sws.connect, daemon=True).start()
-    except Exception as e:
-        print("Connection Error:", e)
-
 if __name__ == "__main__":
-    init_angel_one()
     console = Console()
     with Live(generate_layout(), refresh_per_second=4, console=console) as live:
         while True:
