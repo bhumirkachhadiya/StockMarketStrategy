@@ -7,3 +7,4 @@ gunicorn==26.2.0
 eventlet==0.41.3
 pyotp==2.10.0
 rich==15.0.0
+psycopg2-binary==2.9.10
