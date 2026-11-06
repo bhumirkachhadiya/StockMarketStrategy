@@ -13,9 +13,53 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        body { background-color: #060911; color: #cbd5e1; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; overflow-x: hidden; }
-        .terminal-card { background-color: #0b1120; border: 1px solid #1e293b; border-radius: 8px; }
-        .terminal-header { background: linear-gradient(90deg, #070d1e 0%, #0b1120 100%); }
+        :root {
+            --bg-page: #060911;
+            --card-bg: #0b1120;
+            --card-header: linear-gradient(90deg, #070d1e 0%, #0b1120 100%);
+            --card-border: #1e293b;
+            --text-main: #cbd5e1;
+            --text-muted: #64748b;
+            --text-heading: #ffffff;
+            --input-bg: #070b16;
+            --chart-bg: #070b16;
+            --chart-grid: #0f172a;
+            --chart-text: #94a3b8;
+            --chart-border: #1e293b;
+            --surface-bg: #070b16;
+        }
+
+        body.light-theme {
+            --bg-page: #f1f5f9;
+            --card-bg: #ffffff;
+            --card-header: linear-gradient(90deg, #f8fafc 0%, #ffffff 100%);
+            --card-border: #cbd5e1;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --text-heading: #0f172a;
+            --input-bg: #f8fafc;
+            --chart-bg: #ffffff;
+            --chart-grid: #f1f5f9;
+            --chart-text: #475569;
+            --chart-border: #cbd5e1;
+            --surface-bg: #f8fafc;
+        }
+
+        body { 
+            background-color: var(--bg-page); 
+            color: var(--text-main); 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
+            overflow-x: hidden; 
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .terminal-card { 
+            background-color: var(--card-bg); 
+            border: 1px solid var(--card-border); 
+            border-radius: 10px; 
+            transition: all 0.2s ease;
+        }
+        .terminal-header { background: var(--card-header); }
         .tab-btn.active { background-color: #0284c7; color: #ffffff; }
         .touch-breach { animation: pulseGlow 1.5s infinite; }
         @keyframes pulseGlow {
@@ -23,17 +67,43 @@
             70% { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
             100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
         }
+
+        /* Light mode specific element overrides */
+        body.light-theme .text-white { color: #0f172a !important; }
+        body.light-theme .text-slate-400 { color: #475569 !important; }
+        body.light-theme .text-slate-300 { color: #334155 !important; }
+        body.light-theme .text-slate-500 { color: #64748b !important; }
+        body.light-theme .bg-slate-900,
+        body.light-theme .bg-slate-950 { background-color: #f8fafc !important; border-color: #cbd5e1 !important; color: #0f172a !important; }
+        body.light-theme .bg-slate-900\/60,
+        body.light-theme .bg-slate-950\/80 { background-color: rgba(248, 250, 252, 0.95) !important; color: #0f172a !important; }
+        body.light-theme .border-slate-800,
+        body.light-theme .border-slate-700,
+        body.light-theme .border-slate-900 { border-color: #e2e8f0 !important; }
+        body.light-theme .strike-sticky { background-color: #f1f5f9 !important; color: #0f172a !important; }
+        body.light-theme input,
+        body.light-theme select {
+            background-color: #ffffff !important;
+            border-color: #cbd5e1 !important;
+            color: #0f172a !important;
+        }
+        body.light-theme .divide-slate-800,
+        body.light-theme .divide-slate-800\/60 {
+            border-color: #e2e8f0 !important;
+        }
+
         /* Custom scrollbar */
         ::-webkit-scrollbar { width: 5px; height: 5px; }
-        ::-webkit-scrollbar-track { background: #070b16; }
-        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #334155; }
-        .itm-call { background-color: rgba(16, 185, 129, 0.06); }
-        .itm-put { background-color: rgba(239, 68, 68, 0.06); }
-        .atm-row { background-color: rgba(56, 189, 248, 0.15) !important; border-top: 1px solid #0284c7; border-bottom: 1px solid #0284c7; }
-        .strike-sticky { position: sticky; left: 0; z-index: 5; background-color: #0b1120; }
+        ::-webkit-scrollbar-track { background: var(--bg-page); }
+        ::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+        .itm-call { background-color: rgba(16, 185, 129, 0.09); }
+        .itm-put { background-color: rgba(239, 68, 68, 0.09); }
+        .atm-row { background-color: rgba(56, 189, 248, 0.18) !important; border-top: 1px solid #0284c7; border-bottom: 1px solid #0284c7; }
+        .strike-sticky { position: sticky; left: 0; z-index: 5; background-color: var(--card-bg); }
+        
         /* Mobile navigation */
-        .mobile-nav-btn.active { color: #38bdf8; border-top: 2px solid #38bdf8; background-color: rgba(56, 189, 248, 0.08); }
+        .mobile-nav-btn.active { color: #0284c7; border-top: 2px solid #0284c7; background-color: rgba(2, 132, 199, 0.08); }
     </style>
 </head>
 <body class="p-1 md:p-3 text-xs md:text-sm antialiased select-none pb-16 md:pb-3">
@@ -67,13 +137,27 @@
                 </div>
             </div>
 
-            <!-- SMARTAPI AUTH & CONFIG BUTTONS -->
+            <!-- HEADER ACTION BUTTONS: THEME, GUIDE, SETTINGS, AUTH -->
             <div class="flex items-center gap-1.5">
-                <button onclick="openSettingsModal()" class="flex items-center gap-1 bg-slate-800 hover:bg-slate-700 text-slate-200 px-2.5 py-1 rounded border border-slate-700 text-xs font-medium transition">
+                <!-- LIGHT / DARK THEME TOGGLE BUTTON -->
+                <button onclick="toggleTheme()" id="themeToggleBtn" class="flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 px-2 py-1 rounded border border-slate-700 text-xs font-semibold transition" title="Toggle Theme (Light / Dark)">
+                    <i data-lucide="sun" id="themeIconSun" class="w-3.5 h-3.5 text-amber-400 hidden"></i>
+                    <i data-lucide="moon" id="themeIconMoon" class="w-3.5 h-3.5 text-cyan-300"></i>
+                    <span id="themeLabel" class="hidden sm:inline">Theme</span>
+                </button>
+
+                <!-- STRATEGY & ANALYSIS GUIDE BUTTON -->
+                <button onclick="openHelpGuideModal()" class="flex items-center gap-1.5 bg-cyan-950/80 hover:bg-cyan-900 text-cyan-300 border border-cyan-800 px-2.5 py-1 rounded text-xs font-bold transition" title="Open Complete Strategy & Analysis Guide">
+                    <i data-lucide="book-open" class="w-3.5 h-3.5 text-cyan-400"></i>
+                    <span class="hidden sm:inline">Guide</span>
+                </button>
+
+                <button onclick="openSettingsModal()" class="flex items-center gap-1 bg-slate-800 hover:bg-slate-700 text-slate-200 px-2.5 py-1 rounded border border-slate-700 text-xs font-medium transition" title="Terminal Settings">
                     <i data-lucide="sliders" class="w-3.5 h-3.5 text-cyan-400"></i>
                     <span class="hidden sm:inline">Settings</span>
                 </button>
-                <div id="authStatusBadge" class="flex items-center gap-1.5 bg-red-950/60 text-red-400 border border-red-800 px-2.5 py-1 rounded text-xs font-bold cursor-pointer" onclick="openLoginModal()">
+
+                <div id="authStatusBadge" class="flex items-center gap-1.5 bg-red-950/60 text-red-400 border border-red-800 px-2.5 py-1 rounded text-xs font-bold cursor-pointer" onclick="openLoginModal()" title="Angel One SmartAPI Session">
                     <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
                     <span id="authStatusText">SmartAPI Disconnected</span>
                 </div>
@@ -137,21 +221,21 @@
 
                 <!-- LIVE STRATEGY PRICING HUD: P&L, NEXT TARGET, DISTANCE TO SL -->
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 mb-2 p-2 bg-slate-950 rounded border border-slate-800/80 text-[11px]">
-                    <div>
-                        <span class="text-slate-500 block text-[9px] uppercase font-bold">ACTIONABLE SIGNAL</span>
+                    <div class="p-1 rounded bg-slate-900/40">
+                        <span class="text-slate-500 block text-[9px] uppercase font-bold tracking-wider">STRATEGY BIAS / SIGNAL</span>
                         <div id="hudSignal" class="font-black text-cyan-400 text-xs truncate mt-0.5">SCANNING...</div>
                     </div>
-                    <div>
-                        <span class="text-slate-500 block text-[9px] uppercase font-bold">P&L FROM ENTRY</span>
+                    <div class="p-1 rounded bg-slate-900/40">
+                        <span class="text-slate-500 block text-[9px] uppercase font-bold tracking-wider">RUNNING P&L (PTS / %)</span>
                         <div id="hudPnL" class="font-mono font-bold text-slate-300 text-xs mt-0.5">₹0.00 (0.00%)</div>
                     </div>
-                    <div>
-                        <span class="text-slate-500 block text-[9px] uppercase font-bold">NEXT TARGET DISTANCE</span>
-                        <div id="hudNextTarget" class="font-mono font-bold text-green-400 text-xs mt-0.5">--</div>
+                    <div class="p-1 rounded bg-slate-900/40">
+                        <span class="text-slate-500 block text-[9px] uppercase font-bold tracking-wider">DISTANCE TO NEXT TARGET</span>
+                        <div id="hudNextTarget" class="font-mono font-bold text-emerald-400 text-xs mt-0.5">--</div>
                     </div>
-                    <div>
-                        <span class="text-slate-500 block text-[9px] uppercase font-bold">SL DISTANCE</span>
-                        <div id="hudDistSL" class="font-mono font-bold text-red-400 text-xs mt-0.5">--</div>
+                    <div class="p-1 rounded bg-slate-900/40">
+                        <span class="text-slate-500 block text-[9px] uppercase font-bold tracking-wider">RISK BUFFER TO SL</span>
+                        <div id="hudDistSL" class="font-mono font-bold text-rose-400 text-xs mt-0.5">--</div>
                     </div>
                 </div>
 
@@ -418,6 +502,107 @@
                 </button>
             </div>
         </div>
+    <!-- MODAL: STRATEGY & ANALYSIS GUIDE -->
+    <div id="helpGuideModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50 p-3 md:p-6 overflow-y-auto">
+        <div class="terminal-card p-4 md:p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl border-cyan-800/80">
+            <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-800">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="book-open" class="w-5 h-5 text-cyan-400"></i>
+                    <div>
+                        <h3 class="font-bold text-white text-base md:text-lg">Strategy & Market Analysis Guide</h3>
+                        <p class="text-[11px] text-slate-400">Learn how to read exact Fibonacci levels, option chain tags, and scanner opportunities.</p>
+                    </div>
+                </div>
+                <button onclick="closeHelpGuideModal()" class="text-slate-400 hover:text-white p-1 rounded hover:bg-slate-800 transition">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <div class="space-y-4 text-xs">
+                
+                <!-- 1. THE 6 EXACT STRATEGY LEVELS -->
+                <div class="p-3.5 bg-slate-900/80 rounded-lg border border-slate-800">
+                    <div class="flex items-center gap-2 mb-2 font-bold text-cyan-400 text-sm">
+                        <span>1. The 6 Core Strategy Price Levels</span>
+                    </div>
+                    <p class="text-slate-400 leading-relaxed mb-3">
+                        The strategy calculates exact mathematical Fibonacci rays ($0, 0.236, 1.0, 1.618$) across high-to-low and low-to-high swing cycles. Every level plotted on your chart corresponds to an actionable decision:
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-[11px]">
+                        <div class="p-2 rounded bg-slate-950 border border-yellow-800/60">
+                            <span class="font-bold text-yellow-400 block text-xs">🟡 Entry Price</span>
+                            <span class="text-slate-400">The key breakout confirmation trigger point. Long (CE) triggers when price trades above; Short (PE) triggers when price trades below.</span>
+                        </div>
+                        <div class="p-2 rounded bg-slate-950 border border-red-800/60">
+                            <span class="font-bold text-red-400 block text-xs">🔴 Stop Loss (SL)</span>
+                            <span class="text-slate-400">Strict invalidation boundary. If spot or contract price crosses this level, the setup is considered void.</span>
+                        </div>
+                        <div class="p-2 rounded bg-slate-950 border border-green-800/60">
+                            <span class="font-bold text-green-400 block text-xs">🟢 Target 1 (T1)</span>
+                            <span class="text-slate-400">Primary conservative target (0.236 extension). Recommended zone for moving SL to cost (breakeven).</span>
+                        </div>
+                        <div class="p-2 rounded bg-slate-950 border border-emerald-800/60">
+                            <span class="font-bold text-emerald-400 block text-xs">🟢 Target 2 (T2)</span>
+                            <span class="text-slate-400">Momentum continuation target (0.618 extension). Ideal for booking 50% partial profits.</span>
+                        </div>
+                        <div class="p-2 rounded bg-slate-950 border border-cyan-800/60">
+                            <span class="font-bold text-cyan-400 block text-xs">🔵 Target 3 (T3)</span>
+                            <span class="text-slate-400">Full 1.0 structural cycle completion. Strong resistance/support zone.</span>
+                        </div>
+                        <div class="p-2 rounded bg-slate-950 border border-purple-800/60">
+                            <span class="font-bold text-purple-400 block text-xs">🟣 Target 4 (T4)</span>
+                            <span class="text-slate-400">Golden ratio expansion (1.618). Climax exhaustion zone for trailing runners.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. UNDERSTANDING DISTANCES & PROXIMITY -->
+                <div class="p-3.5 bg-slate-900/80 rounded-lg border border-slate-800">
+                    <div class="flex items-center gap-2 mb-2 font-bold text-amber-400 text-sm">
+                        <span>2. How to Read Distances & Status Badges</span>
+                    </div>
+                    <ul class="space-y-2 text-slate-400 leading-relaxed text-[11px]">
+                        <li><strong class="text-white">Distance (₹) & Diff (%):</strong> Shows how many points and what percentage move remains to reach the level from current LTP.</li>
+                        <li><strong class="text-yellow-400">NEAR ENTRY:</strong> Current LTP is within 0.10% of the Entry level. Prepare order placement.</li>
+                        <li><strong class="text-green-400">ENTERED / ACTIVE:</strong> Strategy level has been confirmed; position is live.</li>
+                        <li><strong class="text-emerald-400">T1 HIT / T2 HIT:</strong> Target reached! The chart displays green celebration indicators.</li>
+                        <li><strong class="text-red-400">SL BREACHED:</strong> Risk line touched. Protect capital immediately.</li>
+                    </ul>
+                </div>
+
+                <!-- 3. OPTION CHAIN & CONTRACT SELECTION -->
+                <div class="p-3.5 bg-slate-900/80 rounded-lg border border-slate-800">
+                    <div class="flex items-center gap-2 mb-2 font-bold text-cyan-300 text-sm">
+                        <span>3. Option Chain & Live Strike Charting</span>
+                    </div>
+                    <div class="space-y-2 text-slate-400 leading-relaxed text-[11px]">
+                        <p><strong class="text-cyan-400">Cyan Highlight (ATM):</strong> The At-The-Money strike closest to current spot price. ATM strikes provide optimal liquidity and delta (~0.50).</p>
+                        <p><strong class="text-emerald-400">Green Tint (ITM Calls):</strong> In-the-money Call options (Strike &lt; Spot) for Bullish trends with lower time decay.</p>
+                        <p><strong class="text-rose-400">Red Tint (ITM Puts):</strong> In-the-money Put options (Strike &gt; Spot) for Bearish breakdowns.</p>
+                        <p><strong class="text-white">Interactive Charting:</strong> Tap any CE or PE contract in the chain to instantly chart the contract's real-time candlestick feed with tailored premium Fibonacci targets!</p>
+                    </div>
+                </div>
+
+                <!-- 4. INDIAN MARKET TRADING HOURS -->
+                <div class="p-3.5 bg-slate-900/80 rounded-lg border border-slate-800">
+                    <div class="flex items-center gap-2 mb-1.5 font-bold text-white text-sm">
+                        <span>4. Market Sessions (Asia/Kolkata IST)</span>
+                    </div>
+                    <p class="text-slate-400 text-[11px] leading-relaxed">
+                        • Regular Trading Session: <span class="text-cyan-300 font-bold">09:15 AM to 03:30 PM IST (Mon–Fri)</span>.<br>
+                        • When the market is open, the top pill turns <span class="text-green-400 font-bold">LIVE STREAMING</span> with real-time Angel One SmartAPI tick updates.<br>
+                        • Outside market hours, the terminal displays <span class="text-yellow-400 font-bold">MARKET CLOSED</span> with the official closing prices.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-800 flex justify-end">
+                <button onclick="closeHelpGuideModal()" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold px-4 py-1.5 rounded transition text-xs">
+                    Got it, Close Guide
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- MAIN TERMINAL JAVASCRIPT LOGIC -->
@@ -437,6 +622,7 @@
         let activeOptionChain = null;
 
         document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
             lucide.createIcons();
             initChart();
             initSocket();
@@ -452,31 +638,105 @@
             setInterval(loadIndicesTicker, 8000);
         });
 
+        // Theme management: Light & Dark Mode
+        function initTheme() {
+            const savedTheme = localStorage.getItem('terminal_theme') || 'dark';
+            const isLight = savedTheme === 'light';
+            if (isLight) {
+                document.body.classList.add('light-theme');
+            } else {
+                document.body.classList.remove('light-theme');
+            }
+            updateThemeUI(isLight);
+        }
+
+        function toggleTheme() {
+            const isLight = document.body.classList.toggle('light-theme');
+            localStorage.setItem('terminal_theme', isLight ? 'light' : 'dark');
+            updateThemeUI(isLight);
+            applyChartTheme(isLight);
+            if (window.lucide) lucide.createIcons();
+        }
+
+        function updateThemeUI(isLight) {
+            const sunIcon = document.getElementById('themeIconSun');
+            const moonIcon = document.getElementById('themeIconMoon');
+            const themeLabel = document.getElementById('themeLabel');
+            if (isLight) {
+                if (sunIcon) sunIcon.classList.remove('hidden');
+                if (moonIcon) moonIcon.classList.add('hidden');
+                if (themeLabel) themeLabel.innerText = 'Light';
+            } else {
+                if (sunIcon) sunIcon.classList.add('hidden');
+                if (moonIcon) moonIcon.classList.remove('hidden');
+                if (themeLabel) themeLabel.innerText = 'Dark';
+            }
+        }
+
+        function applyChartTheme(isLight) {
+            if (!chart) return;
+            chart.applyOptions({
+                layout: {
+                    background: { color: isLight ? '#ffffff' : '#070b16' },
+                    textColor: isLight ? '#334155' : '#94a3b8',
+                },
+                grid: {
+                    vertLines: { color: isLight ? '#f1f5f9' : '#0f172a' },
+                    horzLines: { color: isLight ? '#f1f5f9' : '#0f172a' },
+                },
+                rightPriceScale: {
+                    borderColor: isLight ? '#cbd5e1' : '#1e293b',
+                },
+                timeScale: {
+                    borderColor: isLight ? '#cbd5e1' : '#1e293b',
+                }
+            });
+        }
+
+        // Help Guide Modal Controls
+        function openHelpGuideModal() {
+            const modal = document.getElementById('helpGuideModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                if (window.lucide) lucide.createIcons();
+            }
+        }
+
+        function closeHelpGuideModal() {
+            const modal = document.getElementById('helpGuideModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
         // Initialize Lightweight Charts
         function initChart() {
             const container = document.getElementById('chartContainer');
+            const isLight = document.body.classList.contains('light-theme');
             container.innerHTML = '<div id="chartLoader" class="absolute inset-0 flex items-center justify-center bg-slate-950/80 z-10 text-xs text-slate-400 font-bold">Loading live candlestick stream...</div>';
 
             chart = LightweightCharts.createChart(container, {
                 width: container.clientWidth,
                 height: container.clientHeight,
                 layout: {
-                    background: { color: '#070b16' },
-                    textColor: '#94a3b8',
+                    background: { color: isLight ? '#ffffff' : '#070b16' },
+                    textColor: isLight ? '#334155' : '#94a3b8',
                 },
                 grid: {
-                    vertLines: { color: '#0f172a' },
-                    horzLines: { color: '#0f172a' },
+                    vertLines: { color: isLight ? '#f1f5f9' : '#0f172a' },
+                    horzLines: { color: isLight ? '#f1f5f9' : '#0f172a' },
                 },
                 crosshair: {
                     mode: LightweightCharts.CrosshairMode.Normal,
                 },
                 rightPriceScale: {
-                    borderColor: '#1e293b',
+                    borderColor: isLight ? '#cbd5e1' : '#1e293b',
                     scaleMargins: { top: 0.12, bottom: 0.12 },
                 },
                 timeScale: {
-                    borderColor: '#1e293b',
+                    borderColor: isLight ? '#cbd5e1' : '#1e293b',
                     timeVisible: true,
                     secondsVisible: false,
                 },
