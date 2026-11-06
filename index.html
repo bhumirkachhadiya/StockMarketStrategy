@@ -68,19 +68,22 @@
             100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
         }
 
-        /* Light mode specific element overrides */
+        /* Light mode specific element overrides for crisp contrast */
         body.light-theme .text-white { color: #0f172a !important; }
-        body.light-theme .text-slate-400 { color: #475569 !important; }
-        body.light-theme .text-slate-300 { color: #334155 !important; }
-        body.light-theme .text-slate-500 { color: #64748b !important; }
+        body.light-theme .text-slate-400 { color: #334155 !important; }
+        body.light-theme .text-slate-300 { color: #1e293b !important; }
+        body.light-theme .text-slate-500 { color: #475569 !important; }
         body.light-theme .bg-slate-900,
         body.light-theme .bg-slate-950 { background-color: #f8fafc !important; border-color: #cbd5e1 !important; color: #0f172a !important; }
         body.light-theme .bg-slate-900\/60,
+        body.light-theme .bg-slate-900\/80,
+        body.light-theme .bg-slate-900\/90,
         body.light-theme .bg-slate-950\/80 { background-color: rgba(248, 250, 252, 0.95) !important; color: #0f172a !important; }
+        body.light-theme .bg-slate-900\/40 { background-color: #f1f5f9 !important; border: 1px solid #e2e8f0; }
         body.light-theme .border-slate-800,
         body.light-theme .border-slate-700,
-        body.light-theme .border-slate-900 { border-color: #e2e8f0 !important; }
-        body.light-theme .strike-sticky { background-color: #f1f5f9 !important; color: #0f172a !important; }
+        body.light-theme .border-slate-900 { border-color: #cbd5e1 !important; }
+        body.light-theme .strike-sticky { background-color: #e2e8f0 !important; color: #0f172a !important; font-weight: 800; border-left: 1px solid #cbd5e1; border-right: 1px solid #cbd5e1; }
         body.light-theme input,
         body.light-theme select {
             background-color: #ffffff !important;
@@ -91,15 +94,86 @@
         body.light-theme .divide-slate-800\/60 {
             border-color: #e2e8f0 !important;
         }
+        body.light-theme #indicesTickerStrip > div {
+            background-color: #ffffff !important;
+            border-color: #cbd5e1 !important;
+            color: #0f172a !important;
+            box-shadow: 0 1px 2px 0 rgba(0,0,0,0.04);
+        }
+        body.light-theme #indicesTickerStrip span {
+            color: #0f172a !important;
+            font-weight: 700;
+        }
+
+        /* Documentation Guide Styles */
+        .guide-nav-btn.active {
+            background-color: #0284c7 !important;
+            color: #ffffff !important;
+            font-weight: 700;
+        }
+        body.light-theme .guide-nav-btn {
+            color: #334155;
+        }
+        body.light-theme .guide-nav-btn:hover {
+            background-color: #f1f5f9;
+        }
+        body.light-theme .guide-nav-btn.active {
+            background-color: #0284c7 !important;
+            color: #ffffff !important;
+        }
+        body.light-theme .guide-card {
+            background-color: #ffffff !important;
+            border-color: #cbd5e1 !important;
+        }
+        body.light-theme .guide-modal-box {
+            background-color: #ffffff !important;
+            border-color: #cbd5e1 !important;
+            color: #0f172a !important;
+        }
+        body.light-theme #guideSidebar {
+            background-color: #f8fafc !important;
+            border-right-color: #cbd5e1 !important;
+        }
+        body.light-theme .guide-nav-item {
+            color: #334155 !important;
+        }
+        body.light-theme .guide-nav-item:hover {
+            background-color: #f1f5f9 !important;
+            color: #0f172a !important;
+        }
+        body.light-theme .guide-nav-item.bg-cyan-700 {
+            background-color: #0284c7 !important;
+            color: #ffffff !important;
+        }
+        body.light-theme .guide-box-card {
+            background-color: #ffffff !important;
+            border-color: #cbd5e1 !important;
+            color: #0f172a !important;
+        }
+        body.light-theme .guide-box-tip {
+            background-color: #f0fdf4 !important;
+            border-color: #86efac !important;
+            color: #14532d !important;
+        }
+        body.light-theme .guide-box-warn {
+            background-color: #fef2f2 !important;
+            border-color: #fca5a5 !important;
+            color: #7f1d1d !important;
+        }
+        body.light-theme .guide-box-info {
+            background-color: #f0f9ff !important;
+            border-color: #7dd3fc !important;
+            color: #0c4a6e !important;
+        }
 
         /* Custom scrollbar */
         ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: var(--bg-page); }
         ::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: #64748b; }
-        .itm-call { background-color: rgba(16, 185, 129, 0.09); }
-        .itm-put { background-color: rgba(239, 68, 68, 0.09); }
-        .atm-row { background-color: rgba(56, 189, 248, 0.18) !important; border-top: 1px solid #0284c7; border-bottom: 1px solid #0284c7; }
+        .itm-call { background-color: rgba(16, 185, 129, 0.12); }
+        .itm-put { background-color: rgba(239, 68, 68, 0.12); }
+        .atm-row { background-color: rgba(56, 189, 248, 0.22) !important; border-top: 2px solid #0284c7; border-bottom: 2px solid #0284c7; }
         .strike-sticky { position: sticky; left: 0; z-index: 5; background-color: var(--card-bg); }
         
         /* Mobile navigation */
@@ -147,17 +221,17 @@
                 </button>
 
                 <!-- STRATEGY & ANALYSIS GUIDE BUTTON -->
-                <button onclick="openHelpGuideModal()" class="flex items-center gap-1.5 bg-cyan-950/80 hover:bg-cyan-900 text-cyan-300 border border-cyan-800 px-2.5 py-1 rounded text-xs font-bold transition" title="Open Complete Strategy & Analysis Guide">
+                <button onclick="openHelpGuideModal(event)" class="flex items-center gap-1.5 bg-cyan-950/80 hover:bg-cyan-900 text-cyan-300 border border-cyan-800 px-2.5 py-1 rounded text-xs font-bold transition" title="Open Complete Strategy & Analysis Guide">
                     <i data-lucide="book-open" class="w-3.5 h-3.5 text-cyan-400"></i>
                     <span class="hidden sm:inline">Guide</span>
                 </button>
 
-                <button onclick="openSettingsModal()" class="flex items-center gap-1 bg-slate-800 hover:bg-slate-700 text-slate-200 px-2.5 py-1 rounded border border-slate-700 text-xs font-medium transition" title="Terminal Settings">
+                <button onclick="openSettingsModal(event)" class="flex items-center gap-1 bg-slate-800 hover:bg-slate-700 text-slate-200 px-2.5 py-1 rounded border border-slate-700 text-xs font-medium transition" title="Terminal Settings">
                     <i data-lucide="sliders" class="w-3.5 h-3.5 text-cyan-400"></i>
                     <span class="hidden sm:inline">Settings</span>
                 </button>
 
-                <div id="authStatusBadge" class="flex items-center gap-1.5 bg-red-950/60 text-red-400 border border-red-800 px-2.5 py-1 rounded text-xs font-bold cursor-pointer" onclick="openLoginModal()" title="Angel One SmartAPI Session">
+                <div id="authStatusBadge" class="flex items-center gap-1.5 bg-red-950/60 text-red-400 border border-red-800 px-2.5 py-1 rounded text-xs font-bold cursor-pointer" onclick="openLoginModal(event)" title="Angel One SmartAPI Session">
                     <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
                     <span id="authStatusText">SmartAPI Disconnected</span>
                 </div>
@@ -475,14 +549,14 @@
     </div>
 
     <!-- MODAL: STRATEGY & PLATFORM SETTINGS -->
-    <div id="settingsModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-        <div class="terminal-card p-5 w-full max-w-md shadow-2xl">
+    <div id="settingsModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4" onclick="handleBackdropClick(event, 'settingsModal')">
+        <div class="terminal-card p-5 w-full max-w-md shadow-2xl" onclick="event.stopPropagation()">
             <div class="flex items-center justify-between pb-2 mb-3 border-b border-slate-800">
                 <div class="flex items-center gap-2">
                     <i data-lucide="sliders" class="w-5 h-5 text-cyan-400"></i>
                     <h3 class="font-bold text-white text-base">Strategy & Platform Settings</h3>
                 </div>
-                <button onclick="closeSettingsModal()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-4 h-4"></i></button>
+                <button onclick="closeSettingsModal()" class="text-slate-400 hover:text-white p-1 rounded hover:bg-slate-800"><i data-lucide="x" class="w-4 h-4"></i></button>
             </div>
 
             <div class="flex flex-col gap-4 text-xs">
@@ -502,106 +576,90 @@
                 </button>
             </div>
         </div>
-    <!-- MODAL: STRATEGY & ANALYSIS GUIDE -->
-    <div id="helpGuideModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50 p-3 md:p-6 overflow-y-auto">
-        <div class="terminal-card p-4 md:p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl border-cyan-800/80">
-            <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-800">
-                <div class="flex items-center gap-2">
-                    <i data-lucide="book-open" class="w-5 h-5 text-cyan-400"></i>
+    </div>
+
+    <!-- MODAL: STRATEGY & ANALYSIS GUIDE (COMPLETE MULTILINGUAL) -->
+    <div id="helpGuideModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50 p-2 sm:p-4 md:p-6" onclick="handleBackdropClick(event, 'helpGuideModal')">
+        <div class="terminal-card guide-modal-box p-0 w-full max-w-5xl h-[92vh] max-h-[820px] flex flex-col shadow-2xl border-cyan-800/80 overflow-hidden" onclick="event.stopPropagation()">
+            
+            <!-- GUIDE HEADER WITH LANGUAGE SELECTOR -->
+            <div class="p-3 sm:p-4 border-b border-slate-800 flex flex-wrap items-center justify-between gap-3 bg-slate-950/70">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded bg-cyan-600/20 border border-cyan-500/60 flex items-center justify-center text-cyan-400 shrink-0">
+                        <i data-lucide="book-open" class="w-4 h-4"></i>
+                    </div>
                     <div>
-                        <h3 class="font-bold text-white text-base md:text-lg">Strategy & Market Analysis Guide</h3>
-                        <p class="text-[11px] text-slate-400">Learn how to read exact Fibonacci levels, option chain tags, and scanner opportunities.</p>
+                        <h3 id="guideModalTitle" class="font-bold text-white text-sm sm:text-base md:text-lg">Strategy & Market Analysis Guide</h3>
+                        <p id="guideModalSubtitle" class="text-[10px] sm:text-[11px] text-slate-400">Master the 6 Fibonacci levels, live option chain tags, and scanner opportunities.</p>
                     </div>
                 </div>
-                <button onclick="closeHelpGuideModal()" class="text-slate-400 hover:text-white p-1 rounded hover:bg-slate-800 transition">
-                    <i data-lucide="x" class="w-5 h-5"></i>
+
+                <!-- RIGHT CONTROLS: LANGUAGE SELECTOR & CLOSE -->
+                <div class="flex items-center gap-2">
+                    <!-- LANGUAGE SELECTOR -->
+                    <div class="flex items-center bg-slate-900 border border-slate-700 rounded p-0.5" id="guideLangSelector">
+                        <button onclick="setGuideLanguage('en')" id="langBtn-en" class="guide-lang-btn px-2.5 py-1 text-xs font-bold rounded transition">English</button>
+                        <button onclick="setGuideLanguage('hi')" id="langBtn-hi" class="guide-lang-btn px-2.5 py-1 text-xs font-bold rounded transition">हिन्दी</button>
+                        <button onclick="setGuideLanguage('gu')" id="langBtn-gu" class="guide-lang-btn px-2.5 py-1 text-xs font-bold rounded transition">ગુજરાતી</button>
+                    </div>
+
+                    <button onclick="closeHelpGuideModal()" class="text-slate-400 hover:text-white p-1.5 rounded hover:bg-slate-800 transition" title="Close Guide">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- SEARCH BAR & MOBILE SECTION SELECTOR -->
+            <div class="px-3 sm:px-4 py-2 border-b border-slate-800 bg-slate-900/40 flex flex-wrap items-center justify-between gap-2">
+                <!-- Search Input -->
+                <div class="relative flex-1 min-w-[200px]">
+                    <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5 pointer-events-none"></i>
+                    <input type="text" id="guideSearchInput" oninput="handleGuideSearch(this.value)" placeholder="Search guide topics, levels, rules, FAQs..." class="w-full bg-slate-950 border border-slate-800 rounded pl-8 pr-8 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 font-sans">
+                    <button id="guideSearchClearBtn" onclick="clearGuideSearch()" class="hidden absolute right-2.5 top-1.5 text-slate-400 hover:text-white text-xs p-1">✕</button>
+                </div>
+
+                <!-- Mobile Section Dropdown (visible on screens < 768px) -->
+                <div class="md:hidden w-full sm:w-auto">
+                    <select id="guideMobileSectionSelect" onchange="selectGuideSection(this.value)" class="w-full bg-slate-950 border border-slate-800 text-cyan-300 text-xs px-2.5 py-1.5 rounded font-bold">
+                    </select>
+                </div>
+            </div>
+
+            <!-- MAIN BODY: DESKTOP SIDEBAR + CONTENT VIEWER -->
+            <div class="flex-1 flex overflow-hidden">
+                <!-- Desktop Sidebar (Hidden on <md) -->
+                <aside id="guideSidebar" class="w-56 lg:w-64 border-r border-slate-800 p-2.5 space-y-1 overflow-y-auto hidden md:block shrink-0 bg-slate-950/30">
+                    <!-- Nav items rendered dynamically -->
+                </aside>
+
+                <!-- Content Area -->
+                <main id="guideContentBody" class="flex-1 p-4 md:p-6 overflow-y-auto space-y-5 text-xs sm:text-sm">
+                    <!-- Rendered dynamically by active language and section or search query -->
+                </main>
+            </div>
+
+            <!-- GUIDE FOOTER: PREV / NEXT BUTTONS -->
+            <div class="p-3 border-t border-slate-800 bg-slate-950/70 flex items-center justify-between text-xs">
+                <button id="guidePrevBtn" onclick="navigateGuide(-1)" class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 transition font-bold disabled:opacity-40 disabled:cursor-not-allowed">
+                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                    <span id="guidePrevLabel">Previous</span>
                 </button>
+
+                <div id="guideSectionCounter" class="text-[11px] text-slate-400 font-mono">
+                    Section 1 of 7
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <button id="guideNextBtn" onclick="navigateGuide(1)" class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-cyan-600 hover:bg-cyan-500 text-white transition font-bold disabled:opacity-40 disabled:cursor-not-allowed">
+                        <span id="guideNextLabel">Next</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                    <button onclick="closeHelpGuideModal()" class="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition text-xs font-semibold">
+                        <span id="guideCloseLabel">Close</span>
+                    </button>
+                </div>
             </div>
 
-            <div class="space-y-4 text-xs">
-                
-                <!-- 1. THE 6 EXACT STRATEGY LEVELS -->
-                <div class="p-3.5 bg-slate-900/80 rounded-lg border border-slate-800">
-                    <div class="flex items-center gap-2 mb-2 font-bold text-cyan-400 text-sm">
-                        <span>1. The 6 Core Strategy Price Levels</span>
-                    </div>
-                    <p class="text-slate-400 leading-relaxed mb-3">
-                        The strategy calculates exact mathematical Fibonacci rays ($0, 0.236, 1.0, 1.618$) across high-to-low and low-to-high swing cycles. Every level plotted on your chart corresponds to an actionable decision:
-                    </p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-[11px]">
-                        <div class="p-2 rounded bg-slate-950 border border-yellow-800/60">
-                            <span class="font-bold text-yellow-400 block text-xs">🟡 Entry Price</span>
-                            <span class="text-slate-400">The key breakout confirmation trigger point. Long (CE) triggers when price trades above; Short (PE) triggers when price trades below.</span>
-                        </div>
-                        <div class="p-2 rounded bg-slate-950 border border-red-800/60">
-                            <span class="font-bold text-red-400 block text-xs">🔴 Stop Loss (SL)</span>
-                            <span class="text-slate-400">Strict invalidation boundary. If spot or contract price crosses this level, the setup is considered void.</span>
-                        </div>
-                        <div class="p-2 rounded bg-slate-950 border border-green-800/60">
-                            <span class="font-bold text-green-400 block text-xs">🟢 Target 1 (T1)</span>
-                            <span class="text-slate-400">Primary conservative target (0.236 extension). Recommended zone for moving SL to cost (breakeven).</span>
-                        </div>
-                        <div class="p-2 rounded bg-slate-950 border border-emerald-800/60">
-                            <span class="font-bold text-emerald-400 block text-xs">🟢 Target 2 (T2)</span>
-                            <span class="text-slate-400">Momentum continuation target (0.618 extension). Ideal for booking 50% partial profits.</span>
-                        </div>
-                        <div class="p-2 rounded bg-slate-950 border border-cyan-800/60">
-                            <span class="font-bold text-cyan-400 block text-xs">🔵 Target 3 (T3)</span>
-                            <span class="text-slate-400">Full 1.0 structural cycle completion. Strong resistance/support zone.</span>
-                        </div>
-                        <div class="p-2 rounded bg-slate-950 border border-purple-800/60">
-                            <span class="font-bold text-purple-400 block text-xs">🟣 Target 4 (T4)</span>
-                            <span class="text-slate-400">Golden ratio expansion (1.618). Climax exhaustion zone for trailing runners.</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 2. UNDERSTANDING DISTANCES & PROXIMITY -->
-                <div class="p-3.5 bg-slate-900/80 rounded-lg border border-slate-800">
-                    <div class="flex items-center gap-2 mb-2 font-bold text-amber-400 text-sm">
-                        <span>2. How to Read Distances & Status Badges</span>
-                    </div>
-                    <ul class="space-y-2 text-slate-400 leading-relaxed text-[11px]">
-                        <li><strong class="text-white">Distance (₹) & Diff (%):</strong> Shows how many points and what percentage move remains to reach the level from current LTP.</li>
-                        <li><strong class="text-yellow-400">NEAR ENTRY:</strong> Current LTP is within 0.10% of the Entry level. Prepare order placement.</li>
-                        <li><strong class="text-green-400">ENTERED / ACTIVE:</strong> Strategy level has been confirmed; position is live.</li>
-                        <li><strong class="text-emerald-400">T1 HIT / T2 HIT:</strong> Target reached! The chart displays green celebration indicators.</li>
-                        <li><strong class="text-red-400">SL BREACHED:</strong> Risk line touched. Protect capital immediately.</li>
-                    </ul>
-                </div>
-
-                <!-- 3. OPTION CHAIN & CONTRACT SELECTION -->
-                <div class="p-3.5 bg-slate-900/80 rounded-lg border border-slate-800">
-                    <div class="flex items-center gap-2 mb-2 font-bold text-cyan-300 text-sm">
-                        <span>3. Option Chain & Live Strike Charting</span>
-                    </div>
-                    <div class="space-y-2 text-slate-400 leading-relaxed text-[11px]">
-                        <p><strong class="text-cyan-400">Cyan Highlight (ATM):</strong> The At-The-Money strike closest to current spot price. ATM strikes provide optimal liquidity and delta (~0.50).</p>
-                        <p><strong class="text-emerald-400">Green Tint (ITM Calls):</strong> In-the-money Call options (Strike &lt; Spot) for Bullish trends with lower time decay.</p>
-                        <p><strong class="text-rose-400">Red Tint (ITM Puts):</strong> In-the-money Put options (Strike &gt; Spot) for Bearish breakdowns.</p>
-                        <p><strong class="text-white">Interactive Charting:</strong> Tap any CE or PE contract in the chain to instantly chart the contract's real-time candlestick feed with tailored premium Fibonacci targets!</p>
-                    </div>
-                </div>
-
-                <!-- 4. INDIAN MARKET TRADING HOURS -->
-                <div class="p-3.5 bg-slate-900/80 rounded-lg border border-slate-800">
-                    <div class="flex items-center gap-2 mb-1.5 font-bold text-white text-sm">
-                        <span>4. Market Sessions (Asia/Kolkata IST)</span>
-                    </div>
-                    <p class="text-slate-400 text-[11px] leading-relaxed">
-                        • Regular Trading Session: <span class="text-cyan-300 font-bold">09:15 AM to 03:30 PM IST (Mon–Fri)</span>.<br>
-                        • When the market is open, the top pill turns <span class="text-green-400 font-bold">LIVE STREAMING</span> with real-time Angel One SmartAPI tick updates.<br>
-                        • Outside market hours, the terminal displays <span class="text-yellow-400 font-bold">MARKET CLOSED</span> with the official closing prices.
-                    </p>
-                </div>
-
-            </div>
-
-            <div class="mt-4 pt-3 border-t border-slate-800 flex justify-end">
-                <button onclick="closeHelpGuideModal()" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold px-4 py-1.5 rounded transition text-xs">
-                    Got it, Close Guide
-                </button>
-            </div>
         </div>
     </div>
 
@@ -693,18 +751,1334 @@
             });
         }
 
-        // Help Guide Modal Controls
-        function openHelpGuideModal() {
+        // ========================================================
+        // COMPREHENSIVE MULTILINGUAL DOCUMENTATION ENGINE (EN, HI, GU)
+        // ========================================================
+        let currentGuideLang = localStorage.getItem('user_guide_lang') || 'en';
+        let currentGuideSectionId = 'sec_overview';
+        let guideSearchQuery = '';
+
+        const GUIDE_DATA = {
+            en: {
+                title: "Strategy & Market Analysis Guide",
+                subtitle: "Master the 6 Fibonacci levels, live option chain tags, and scanner opportunities.",
+                search_placeholder: "Search guide topics, levels, rules, FAQs...",
+                prev: "Previous",
+                next: "Next",
+                close: "Close Guide",
+                section_label: "Section",
+                of_label: "of",
+                no_results: "No matching guide topics found for your search query.",
+                sections: [
+                    {
+                        id: "sec_overview",
+                        short_title: "1. Overview & Architecture",
+                        title: "1. Platform Overview & Architecture",
+                        icon: "layout-dashboard",
+                        html: `
+                            <div class="space-y-4">
+                                <p class="text-slate-300 leading-relaxed">
+                                    Welcome to <strong>FIB-PRECISION F&O India</strong>, an institutional-grade algorithmic terminal designed for Indian equity and derivatives traders. The platform combines real-time tick streaming from <strong>Angel One SmartAPI WebSocket</strong> with automated mathematical <strong>Fibonacci swing ray calculations</strong> ($0, 0.236, 1.0, 1.618$).
+                                </p>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    <div class="p-3 rounded-lg bg-slate-900 border border-cyan-900/60 guide-box-card">
+                                        <div class="flex items-center gap-2 font-bold text-cyan-400 mb-1">
+                                            <i data-lucide="zap" class="w-4 h-4"></i>
+                                            <span>Sub-Second Live Tick Stream</span>
+                                        </div>
+                                        <p class="text-slate-400 text-xs leading-relaxed">
+                                            Direct WebSocket connection to Angel One trading servers. Receives live tick packets with microsecond timestamps for Spot Indices and all active F&O strike contracts.
+                                        </p>
+                                    </div>
+                                    <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 guide-box-card">
+                                        <div class="flex items-center gap-2 font-bold text-amber-400 mb-1">
+                                            <i data-lucide="clock" class="w-4 h-4"></i>
+                                            <span>Indian Market Hours (IST)</span>
+                                        </div>
+                                        <p class="text-slate-400 text-xs leading-relaxed">
+                                            Pre-Open: <strong>09:00 AM – 09:08 AM</strong><br>
+                                            Normal Session: <strong>09:15 AM – 03:30 PM IST (Mon–Fri)</strong><br>
+                                            Outside market hours, official closing prices are displayed with "MARKET CLOSED" status.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="p-3.5 rounded-lg bg-slate-900/80 border border-cyan-800/60 guide-box-card">
+                                    <h4 class="font-bold text-white text-xs mb-1.5 flex items-center gap-1.5">
+                                        <i data-lucide="cpu" class="w-4 h-4 text-cyan-400"></i>
+                                        <span>Objective Mathematical Strategy</span>
+                                    </h4>
+                                    <p class="text-slate-400 text-xs leading-relaxed">
+                                        Unlike subjective manual trendlines, this platform calculates exact High-to-Low and Low-to-High swing pivots programmatically. Every trade level plotted on your chart corresponds to a strictly quantified Fibonacci ratio.
+                                    </p>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        id: "sec_levels",
+                        short_title: "2. The 6 Strategy Levels",
+                        title: "2. The 6 Core Fibonacci Strategy Levels",
+                        icon: "layers",
+                        html: `
+                            <div class="space-y-4">
+                                <p class="text-slate-300 leading-relaxed">
+                                    Every tracked asset is continuously modeled across swing cycles using 4 mathematical Fibonacci rays ($0.000, 0.236, 1.000, 1.618$). These produce 6 precise actionable price boundaries on your chart and scanner:
+                                </p>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                                    <div class="p-3 rounded bg-slate-950 border border-yellow-800/80 guide-box-card">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="font-bold text-yellow-400 text-xs">🟡 Entry Price (Breakout Trigger)</span>
+                                            <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-yellow-950 text-yellow-300 border border-yellow-800">Trigger Ray</span>
+                                        </div>
+                                        <p class="text-slate-400 text-xs leading-relaxed">
+                                            The critical breakout confirmation point. In Bullish setups, Long orders (Buy CE) trigger when LTP trades above this level. In Bearish setups, Short orders (Buy PE) trigger when LTP trades below this level.
+                                        </p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-950 border border-red-800/80 guide-box-card">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="font-bold text-red-400 text-xs">🔴 Stop Loss - SL (Invalidation)</span>
+                                            <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-red-950 text-red-300 border border-red-800">Risk Limit</span>
+                                        </div>
+                                        <p class="text-slate-400 text-xs leading-relaxed">
+                                            Strict capital protection boundary. If underlying spot or contract price touches this level, the setup is considered fully void. Exit the position immediately without hesitation.
+                                        </p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-950 border border-green-800/80 guide-box-card">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="font-bold text-green-400 text-xs">🟢 Target 1 - T1 (0.236 Ratio)</span>
+                                            <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-green-950 text-green-300 border border-green-800">0.236</span>
+                                        </div>
+                                        <p class="text-slate-400 text-xs leading-relaxed">
+                                            Conservative first milestone. <strong>Rule:</strong> As soon as T1 is touched, move your Stop Loss to the original Entry price (Breakeven / Cost) to create a risk-free trade.
+                                        </p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-950 border border-emerald-800/80 guide-box-card">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="font-bold text-emerald-400 text-xs">🟢 Target 2 - T2 (0.618 Ratio)</span>
+                                            <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">0.618</span>
+                                        </div>
+                                        <p class="text-slate-400 text-xs leading-relaxed">
+                                            High-probability momentum continuation zone. Recommended rule: Book 50% partial profit on your position and trail the remainder.
+                                        </p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-950 border border-cyan-800/80 guide-box-card">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="font-bold text-cyan-400 text-xs">🔵 Target 3 - T3 (1.000 Ratio)</span>
+                                            <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-cyan-950 text-cyan-300 border border-cyan-800">1.000</span>
+                                        </div>
+                                        <p class="text-slate-400 text-xs leading-relaxed">
+                                            Complete 100% structural swing cycle extension. Significant institutional resistance/support cluster.
+                                        </p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-950 border border-purple-800/80 guide-box-card">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="font-bold text-purple-400 text-xs">🟣 Target 4 - T4 (1.618 Expansion)</span>
+                                            <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-purple-950 text-purple-300 border border-purple-800">1.618</span>
+                                        </div>
+                                        <p class="text-slate-400 text-xs leading-relaxed">
+                                            Golden Ratio expansion level. Climax exhaustion zone for remaining trailing runners. Final profit exit point.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        id: "sec_rules",
+                        short_title: "3. Execution Rules",
+                        title: "3. Trade Execution Rules & Order Flow",
+                        icon: "zap",
+                        html: `
+                            <div class="space-y-4">
+                                <p class="text-slate-300 leading-relaxed">
+                                    Follow this 5-step institutional playbook to trade Bullish (Buy CE) and Bearish (Buy PE) opportunities systematically:
+                                </p>
+
+                                <div class="space-y-3">
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 flex items-start gap-3 guide-box-card">
+                                        <div class="w-6 h-6 rounded-full bg-cyan-600 text-white font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">1</div>
+                                        <div>
+                                            <h4 class="font-bold text-white text-xs mb-1">Screen for Opportunities in Scanner</h4>
+                                            <p class="text-slate-400 text-xs">Inspect the Live Market Scanner. Filter by BULLISH or BEARISH. Watch for rows with <span class="text-yellow-400 font-bold">NEAR ENTRY</span> badge (LTP within 0.10% of Entry level).</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 flex items-start gap-3 guide-box-card">
+                                        <div class="w-6 h-6 rounded-full bg-cyan-600 text-white font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">2</div>
+                                        <div>
+                                            <h4 class="font-bold text-white text-xs mb-1">Confirm Breakout & Select Option Type</h4>
+                                            <p class="text-slate-400 text-xs">
+                                                • <strong>Bullish Setup (LTP &gt; Entry):</strong> Buy Call Option (CE) at ATM or 1 strike ITM.<br>
+                                                • <strong>Bearish Setup (LTP &lt; Entry):</strong> Buy Put Option (PE) at ATM or 1 strike ITM.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 flex items-start gap-3 guide-box-card">
+                                        <div class="w-6 h-6 rounded-full bg-cyan-600 text-white font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">3</div>
+                                        <div>
+                                            <h4 class="font-bold text-white text-xs mb-1">Place Stop Loss Order Immediately</h4>
+                                            <p class="text-slate-400 text-xs">Never execute an order without defining your Stop Loss. The terminal displays the exact SL price in red. In Angel One, enter a Stop Loss Market (SL-M) or Limit order at this boundary.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 flex items-start gap-3 guide-box-card">
+                                        <div class="w-6 h-6 rounded-full bg-cyan-600 text-white font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">4</div>
+                                        <div>
+                                            <h4 class="font-bold text-white text-xs mb-1">Move SL to Breakeven at Target 1 (T1)</h4>
+                                            <p class="text-slate-400 text-xs">When spot or option price touches Target 1, modify your Stop Loss order to your entry price. This turns the trade completely risk-free, protecting your capital.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 flex items-start gap-3 guide-box-card">
+                                        <div class="w-6 h-6 rounded-full bg-cyan-600 text-white font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">5</div>
+                                        <div>
+                                            <h4 class="font-bold text-white text-xs mb-1">Scale Out at T2, T3 & T4</h4>
+                                            <p class="text-slate-400 text-xs">Book 50% profit at T2. Trail the remaining quantity using T1 or swing lows as support. Liquidate all remaining contracts upon reaching Target 4.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        id: "sec_chain",
+                        short_title: "4. Option Chain & Charting",
+                        title: "4. Option Chain Matrix & Live Strike Charting",
+                        icon: "table-properties",
+                        html: `
+                            <div class="space-y-4">
+                                <p class="text-slate-300 leading-relaxed">
+                                    The Option Chain provides a complete real-time view of Call (CE) and Put (PE) premiums, delta states, and moneyness tags:
+                                </p>
+
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 text-xs">
+                                    <div class="p-3 rounded bg-slate-900 border border-cyan-800/80 guide-box-card">
+                                        <span class="font-bold text-cyan-400 block mb-1">ATM Strike (Cyan Row)</span>
+                                        <p class="text-slate-400 leading-relaxed">
+                                            The At-The-Money strike closest to current spot price. ATM strikes feature the highest trading liquidity, tightest bid-ask spreads, and an optimal delta of ~0.50.
+                                        </p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-900 border border-emerald-800/80 guide-box-card">
+                                        <span class="font-bold text-emerald-400 block mb-1">ITM Calls (Green Shading)</span>
+                                        <p class="text-slate-400 leading-relaxed">
+                                            In-The-Money Calls (Strike &lt; Spot). Recommended for trend following. Has intrinsic value with lower time decay (Theta) risk.
+                                        </p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-900 border border-rose-800/80 guide-box-card">
+                                        <span class="font-bold text-rose-400 block mb-1">ITM Puts (Red Shading)</span>
+                                        <p class="text-slate-400 leading-relaxed">
+                                            In-The-Money Puts (Strike &gt; Spot). Recommended for bearish breakdowns. Higher delta ensures responsive price movement when index falls.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="p-3.5 rounded-lg bg-cyan-950/40 border border-cyan-700/60 guide-box-info">
+                                    <div class="flex items-center gap-2 font-bold text-cyan-300 text-xs mb-1">
+                                        <i data-lucide="line-chart" class="w-4 h-4 text-cyan-400"></i>
+                                        <span>Interactive Real-Time Strike Charting</span>
+                                    </div>
+                                    <p class="text-slate-300 text-xs leading-relaxed">
+                                        Tap or click any Call (CE) or Put (PE) price row in the Option Chain table! The terminal immediately switches your candlestick chart to display the live contract premium feed, computing contract-specific premium Fibonacci rays!
+                                    </p>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        id: "sec_scanner",
+                        short_title: "5. Real-Time Scanner",
+                        title: "5. Real-Time Opportunity Scanner & Proximity Alerts",
+                        icon: "radar",
+                        html: `
+                            <div class="space-y-4">
+                                <p class="text-slate-300 leading-relaxed">
+                                    The Market Scanner scans all tracked equities and index contracts every few seconds, calculating live proximity distances:
+                                </p>
+
+                                <div class="space-y-2">
+                                    <div class="flex items-center gap-2 p-2.5 rounded bg-slate-900 border border-slate-800 guide-box-card">
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-yellow-500/20 text-yellow-400 border border-yellow-500 shrink-0">NEAR ENTRY</span>
+                                        <p class="text-slate-400 text-xs">LTP is within 0.10% distance of the strategy Entry price. Prepare order parameters on your broker terminal.</p>
+                                    </div>
+
+                                    <div class="flex items-center gap-2 p-2.5 rounded bg-slate-900 border border-slate-800 guide-box-card">
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-500/20 text-cyan-400 border border-cyan-500 shrink-0">ENTRY TRIGGERED</span>
+                                        <p class="text-slate-400 text-xs">Price has confirmed breakout/breakdown beyond Entry. Active trade setup in progress.</p>
+                                    </div>
+
+                                    <div class="flex items-center gap-2 p-2.5 rounded bg-slate-900 border border-slate-800 guide-box-card">
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500 shrink-0">TARGET 1 ACHIEVED</span>
+                                        <p class="text-slate-400 text-xs">Primary milestone hit! Move SL to cost immediately.</p>
+                                    </div>
+
+                                    <div class="flex items-center gap-2 p-2.5 rounded bg-slate-900 border border-slate-800 guide-box-card">
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-red-500/20 text-red-400 border border-red-500 shrink-0">STOP LOSS HIT</span>
+                                        <p class="text-slate-400 text-xs">Risk boundary breached. Setup is closed and marked invalid.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        id: "sec_auth",
+                        short_title: "6. SmartAPI Setup",
+                        title: "6. Angel One SmartAPI Setup & Security",
+                        icon: "shield-check",
+                        html: `
+                            <div class="space-y-4">
+                                <p class="text-slate-300 leading-relaxed">
+                                    Connect your free Angel One SmartAPI developer account to enable high-frequency live data streaming:
+                                </p>
+
+                                <div class="space-y-3">
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 guide-box-card">
+                                        <h4 class="font-bold text-white text-xs mb-1">Required Credentials</h4>
+                                        <ul class="list-disc list-inside space-y-1 text-slate-400 text-xs">
+                                            <li><strong>Client ID:</strong> Your Angel One trading account login ID.</li>
+                                            <li><strong>API Key:</strong> Created in the <a href="https://smartapi.angelbroking.com" target="_blank" class="text-cyan-400 underline">SmartAPI Developer Portal</a>.</li>
+                                            <li><strong>Trading PIN:</strong> Your 4-digit Angel One MPIN.</li>
+                                            <li><strong>TOTP Code:</strong> 6-digit dynamic code generated by Google Authenticator app.</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 guide-box-card">
+                                        <h4 class="font-bold text-white text-xs mb-1">Automated TOTP Generation (Optional)</h4>
+                                        <p class="text-slate-400 text-xs leading-relaxed">
+                                            You can paste your Base32 Authenticator Secret Key into the login form. The terminal will automatically generate valid TOTP tokens every 30 seconds for seamless reconnects!
+                                        </p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-emerald-950/30 border border-emerald-700/60 guide-box-tip">
+                                        <div class="flex items-center gap-1.5 font-bold text-emerald-400 text-xs mb-1">
+                                            <i data-lucide="lock" class="w-4 h-4"></i>
+                                            <span>Security & Privacy Guarantee</span>
+                                        </div>
+                                        <p class="text-slate-300 text-xs leading-relaxed">
+                                            Your credentials are processed entirely in memory on your private host. Keys are never logged, stored in plain text, or shared with third parties.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        id: "sec_faqs",
+                        short_title: "7. FAQs & Risk Advisory",
+                        title: "7. FAQs & Regulatory Risk Advisory",
+                        icon: "help-circle",
+                        html: `
+                            <div class="space-y-4">
+                                <div class="space-y-3">
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 guide-box-card">
+                                        <h4 class="font-bold text-cyan-300 text-xs mb-1">Q: Does the system reconnect if internet drops?</h4>
+                                        <p class="text-slate-400 text-xs leading-relaxed">Yes. The terminal incorporates exponential backoff auto-reconnection logic. If WebSocket connection drops, it re-establishes connectivity automatically within seconds.</p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 guide-box-card">
+                                        <h4 class="font-bold text-cyan-300 text-xs mb-1">Q: Why do option chart levels differ from spot index levels?</h4>
+                                        <p class="text-slate-400 text-xs leading-relaxed">Spot index levels are measured in underlying points (e.g. 24,000 for NIFTY), whereas Option Contract charts calculate Fibonacci levels directly on option premium rupees (e.g. ₹150 for 24000 CE), factoring in implied volatility and time value.</p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 guide-box-card">
+                                        <h4 class="font-bold text-cyan-300 text-xs mb-1">Q: Can I execute orders directly from this terminal?</h4>
+                                        <p class="text-slate-400 text-xs leading-relaxed">This is an analytical and decision-support terminal. Order execution is performed through your registered Angel One mobile/web trading interface to ensure maximum compliance and security.</p>
+                                    </div>
+                                </div>
+
+                                <div class="p-3.5 rounded-lg bg-red-950/40 border border-red-800/80 guide-box-warn">
+                                    <div class="flex items-center gap-1.5 font-bold text-red-400 text-xs mb-1">
+                                        <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+                                        <span>SEBI Regulatory Risk Disclosure on Derivatives</span>
+                                    </div>
+                                    <p class="text-slate-300 text-xs leading-relaxed">
+                                        • 9 out of 10 individual traders in equity Futures and Options Segment incur net losses.<br>
+                                        • Over and above the net trading losses incurred, loss makers expended an additional 28% of net trading losses as transaction costs.<br>
+                                        • Trade with strictly defined risk capital and always adhere to your Stop Loss.
+                                    </p>
+                                </div>
+                            </div>
+                        `
+                    }
+                ]
+            },
+            hi: {
+                title: "रणनीति और बाजार विश्लेषण गाइड",
+                subtitle: "6 फाइबोनैचि स्तरों, ऑप्शन चेन और रीयल-टाइम स्कैनर के लिए संपूर्ण संस्थागत उपयोगकर्ता मार्गदर्शिका।",
+                search_placeholder: "गाइड विषय, स्तर, नियम, एफएक्यू खोजें...",
+                prev: "पिछला",
+                next: "अगला",
+                close: "गाइड बंद करें",
+                section_label: "अनुभाग",
+                of_label: "का",
+                no_results: "आपकी खोज के लिए कोई विषय नहीं मिला।",
+                sections: [
+                    {
+                        id: "sec_overview",
+                        short_title: "1. अवलोकन और आर्किटेक्चर",
+                        title: "1. प्लेटफॉर्म अवलोकन और आर्किटेक्चर",
+                        icon: "layout-dashboard",
+                        html: `
+                            <div class="space-y-4">
+                                <p class="text-slate-300 leading-relaxed">
+                                    <strong>FIB-PRECISION F&O India</strong> में आपका स्वागत है। यह एक उच्च-सटीक एल्गोरिथम ट्रेडिंग टर्मिनल है जिसे भारतीय इक्विटी और डेरिवेटिव्स (F&O) ट्रेडर्स के लिए डिज़ाइन किया गया है। यह प्लेटफॉर्म <strong>एंजेल वन स्मार्टएपीआई वेबसॉकेट</strong> से रीयल-टाइम टिक डेटा प्राप्त करता है और स्वचालित रूप से गणितीय <strong>फाइबोनैचि स्विंग किरणों</strong> ($0, 0.236, 1.0, 1.618$) की गणना करता है।
+                                </p>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    <div class="p-3 rounded-lg bg-slate-900 border border-cyan-900/60 guide-box-card">
+                                        <div class="flex items-center gap-2 font-bold text-cyan-400 mb-1">
+                                            <i data-lucide="zap" class="w-4 h-4"></i>
+                                            <span>लाइव टिक स्ट्रीमिंग</span>
+                                        </div>
+                                        <p class="text-slate-400 text-xs leading-relaxed">
+                                            एंजेल वन सर्वर से सीधा वेबसॉकेट कनेक्शन। निफ्टी, बैंकनिफ्टी, फिननिफ्टी और सभी सक्रिय एफएंडओ स्ट्राइक कॉन्ट्रैक्ट्स के लिए माइक्रोसेकंड टिक अपडेट।
+                                        </p>
+                                    </div>
+                                    <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 guide-box-card">
+                                        <div class="flex items-center gap-2 font-bold text-amber-400 mb-1">
+                                            <i data-lucide="clock" class="w-4 h-4"></i>
+                                            <span>भारतीय बाजार व्यापारिक घंटे (IST)</span>
+                                        </div>
+                                        <p class="text-slate-400 text-xs leading-relaxed">
+                                            प्री-ओपन सत्र: <strong>सुबह 09:00 से 09:08 बजे</strong><br>
+                                            नियमित सत्र: <strong>सुबह 09:15 से दोपहर 03:30 बजे IST (सोम–शुक्र)</strong><br>
+                                            बाजार घंटों के बाद, टर्मिनल आधिकारिक क्लोजिंग भाव के साथ "MARKET CLOSED" स्थिति दिखाता है।
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="p-3.5 rounded-lg bg-slate-900/80 border border-cyan-800/60 guide-box-card">
+                                    <h4 class="font-bold text-white text-xs mb-1.5 flex items-center gap-1.5">
+                                        <i data-lucide="cpu" class="w-4 h-4 text-cyan-400"></i>
+                                        <span>वस्तुनिष्ठ गणितीय रणनीति</span>
+                                    </h4>
+                                    <p class="text-slate-400 text-xs leading-relaxed">
+                                        व्यक्तिगत अनुमान या मानवीय पूर्वाग्रह के बिना, यह प्लेटफॉर्म प्रोग्रामेटिक रूप से हाई-टू-लो और लो-टू-हाई स्विंग पिवोट्स की गणना करता है। चार्ट पर प्रदर्शित प्रत्येक स्तर एक सटीक फाइबोनैचि अनुपात से निर्धारित होता है।
+                                    </p>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        id: "sec_levels",
+                        short_title: "2. 6 मुख्य मूल्य स्तर",
+                        title: "2. 6 मुख्य फाइबोनैचि रणनीति मूल्य स्तर",
+                        icon: "layers",
+                        html: `
+                            <div class="space-y-4">
+                                <p class="text-slate-300 leading-relaxed">
+                                    प्रत्येक ट्रैक किए गए एसेट को 4 गणितीय फाइबोनैचि किरणों ($0.000, 0.236, 1.000, 1.618$) का उपयोग करके मॉडल किया जाता है। इससे चार्ट और स्कैनर पर 6 सटीक मूल्य सीमाएं उत्पन्न होती हैं:
+                                </p>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                                    <div class="p-3 rounded bg-slate-950 border border-yellow-800/80 guide-box-card">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="font-bold text-yellow-400 text-xs">🟡 प्रवेश मूल्य (Entry Price)</span>
+                                            <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-yellow-950 text-yellow-300 border border-yellow-800">ट्रिगर किरण</span>
+                                        </div>
+                                        <p class="text-slate-400 text-xs leading-relaxed">
+                                            प्रमुख ब्रेकआउट पुष्टिकरण बिंदु। बुलिश सेटअप में, जब LTP इस स्तर से ऊपर ट्रेड करता है तब कॉल (Buy CE) ट्रिगर होता है। बेयरिश सेटअप में, जब LTP इस स्तर से नीचे ट्रेड करता है तब पुट (Buy PE) ट्रिगर होता है।
+                                        </p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-950 border border-red-800/80 guide-box-card">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="font-bold text-red-400 text-xs">🔴 स्टॉप लॉस - SL (जोखिम सीमा)</span>
+                                            <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-red-950 text-red-300 border border-red-800">जोखिम सीमा</span>
+                                        </div>
+                                        <p class="text-slate-400 text-xs leading-relaxed">
+                                            सख्त पूंजी सुरक्षा रेखा। यदि स्पॉट या कॉन्ट्रैक्ट मूल्य इस स्तर को छूता है, तो सेटअप अमान्य माना जाता है। बिना किसी संकोच के तुरंत पोजीशन से बाहर निकलें।
+                                        </p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-950 border border-green-800/80 guide-box-card">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="font-bold text-green-400 text-xs">🟢 टार्गेट 1 - T1 (0.236 अनुपात)</span>
+                                            <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-green-950 text-green-300 border border-green-800">0.236</span>
+                                        </div>
+                                        <p class="text-slate-400 text-xs leading-relaxed">
+                                            प्राथमिक सुरक्षित लक्ष्य। <strong>नियम:</strong> जैसे ही T1 हिट हो, अपने स्टॉप लॉस को मूल प्रवेश मूल्य (Breakeven / Cost) पर ले आएं ताकि ट्रेड पूरी तरह से जोखिम-मुक्त हो जाए।
+                                        </p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-950 border border-emerald-800/80 guide-box-card">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="font-bold text-emerald-400 text-xs">🟢 टार्गेट 2 - T2 (0.618 अनुपात)</span>
+                                            <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">0.618</span>
+                                        </div>
+                                        <p class="text-slate-400 text-xs leading-relaxed">
+                                            उच्च-संभावना गति निरंतरता क्षेत्र। अनुशंसित नियम: यहां 50% आंशिक मुनाफा बुक करें और शेष लॉट को ट्रेल करें।
+                                        </p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-950 border border-cyan-800/80 guide-box-card">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="font-bold text-cyan-400 text-xs">🔵 टार्गेट 3 - T3 (1.000 अनुपात)</span>
+                                            <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-cyan-950 text-cyan-300 border border-cyan-800">1.000</span>
+                                        </div>
+                                        <p class="text-slate-400 text-xs leading-relaxed">
+                                            पूर्ण 100% संरचनात्मक चक्र समाप्ति स्तर। यहां मजबूत संस्थागत सपोर्ट/रेजिस्टेंस देखने को मिलता है।
+                                        </p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-950 border border-purple-800/80 guide-box-card">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="font-bold text-purple-400 text-xs">🟣 टार्गेट 4 - T4 (1.618 विस्तार)</span>
+                                            <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-purple-950 text-purple-300 border border-purple-800">1.618</span>
+                                        </div>
+                                        <p class="text-slate-400 text-xs leading-relaxed">
+                                            गोल्डन रेशियो विस्तार। शेष ट्रेलिंग लॉट के लिए अंतिम मुनाफा क्षेत्र और थकावट बिंदु।
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        id: "sec_rules",
+                        short_title: "3. निष्पादन नियम",
+                        title: "3. ट्रेड निष्पादन नियम और कार्यप्रवाह",
+                        icon: "zap",
+                        html: `
+                            <div class="space-y-4">
+                                <p class="text-slate-300 leading-relaxed">
+                                    बुलिश (Buy CE) और बेयरिश (Buy PE) दोनों अवसरों के लिए इस 5-चरणीय अनुशासित संस्थागत कार्यप्रणाली का पालन करें:
+                                </p>
+
+                                <div class="space-y-3">
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 flex items-start gap-3 guide-box-card">
+                                        <div class="w-6 h-6 rounded-full bg-cyan-600 text-white font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">1</div>
+                                        <div>
+                                            <h4 class="font-bold text-white text-xs mb-1">स्कैनर में अवसर पहचानें</h4>
+                                            <p class="text-slate-400 text-xs">लाइव मार्केट स्कैनर देखें। BULLISH या BEARISH फ़िल्टर लगाएं। <span class="text-yellow-400 font-bold">NEAR ENTRY</span> बैज वाली पंक्तियों पर ध्यान दें (LTP प्रवेश स्तर से 0.10% के भीतर)।</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 flex items-start gap-3 guide-box-card">
+                                        <div class="w-6 h-6 rounded-full bg-cyan-600 text-white font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">2</div>
+                                        <div>
+                                            <h4 class="font-bold text-white text-xs mb-1">ब्रेकआउट की पुष्टि करें और ऑप्शन प्रकार चुनें</h4>
+                                            <p class="text-slate-400 text-xs">
+                                                • <strong>बुलिश सेटअप (LTP &gt; Entry):</strong> ATM या 1 स्ट्राइक ITM कॉल ऑप्शन (Buy CE) खरीदें।<br>
+                                                • <strong>बेयरिश सेटअप (LTP &lt; Entry):</strong> ATM या 1 स्ट्राइक ITM पुट ऑप्शन (Buy PE) खरीदें।
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 flex items-start gap-3 guide-box-card">
+                                        <div class="w-6 h-6 rounded-full bg-cyan-600 text-white font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">3</div>
+                                        <div>
+                                            <h4 class="font-bold text-white text-xs mb-1">तुरंत स्टॉप लॉस ऑर्डर लगाएं</h4>
+                                            <p class="text-slate-400 text-xs">बिना स्टॉप लॉस के कभी ट्रेड न करें। टर्मिनल लाल रंग में सटीक SL भाव दिखाता है। अपने ब्रोकर में उसी स्तर पर SL-Market या Limit ऑर्डर रखें।</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 flex items-start gap-3 guide-box-card">
+                                        <div class="w-6 h-6 rounded-full bg-cyan-600 text-white font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">4</div>
+                                        <div>
+                                            <h4 class="font-bold text-white text-xs mb-1">टार्गेट 1 (T1) पर स्टॉप लॉस लागत पर लाएं</h4>
+                                            <p class="text-slate-400 text-xs">जैसे ही मूल्य टार्गेट 1 को छूता है, अपने स्टॉप लॉस को अपनी खरीद लागत पर संशोधित करें। इससे आपकी पूंजी पूरी तरह सुरक्षित हो जाती है।</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 flex items-start gap-3 guide-box-card">
+                                        <div class="w-6 h-6 rounded-full bg-cyan-600 text-white font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">5</div>
+                                        <div>
+                                            <h4 class="font-bold text-white text-xs mb-1">T2, T3 और T4 पर क्रमिक मुनाफा बुक करें</h4>
+                                            <p class="text-slate-400 text-xs">T2 पर 50% मुनाफा लें। शेष लॉट को ट्रेल करते हुए T4 पर पूरी पोजीशन समाप्त करें।</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        id: "sec_chain",
+                        short_title: "4. ऑप्शन चेन और चार्टिंग",
+                        title: "4. ऑप्शन चेन मैट्रिक्स और लाइव कॉन्ट्रैक्ट चार्टिंग",
+                        icon: "table-properties",
+                        html: `
+                            <div class="space-y-4">
+                                <p class="text-slate-300 leading-relaxed">
+                                    ऑप्शन चेन कॉल (CE) और पुट (PE) प्रीमियम, लिक्विडिटी और डेल्टा स्थिति का संपूर्ण वास्तविक समय दृश्य प्रदान करती है:
+                                </p>
+
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 text-xs">
+                                    <div class="p-3 rounded bg-slate-900 border border-cyan-800/80 guide-box-card">
+                                        <span class="font-bold text-cyan-400 block mb-1">ATM स्ट्राइक (नीली पंक्ति)</span>
+                                        <p class="text-slate-400 leading-relaxed">
+                                            वर्तमान स्पॉट मूल्य के सबसे करीब का स्ट्राइक। इसमें सबसे अधिक लिक्विडिटी, कम बिड-आस्क स्प्रेड और ~0.50 का संतुलित डेल्टा होता है।
+                                        </p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-900 border border-emerald-800/80 guide-box-card">
+                                        <span class="font-bold text-emerald-400 block mb-1">ITM कॉल्स (हरा रंग)</span>
+                                        <p class="text-slate-400 leading-relaxed">
+                                            इन-द-मनी कॉल (स्ट्राइक &lt; स्पॉट)। ट्रेंड फॉलो करने के लिए सर्वोत्तम। आंतरिक मूल्य (Intrinsic Value) के कारण समय क्षय (Theta) कम होता है।
+                                        </p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-900 border border-rose-800/80 guide-box-card">
+                                        <span class="font-bold text-rose-400 block mb-1">ITM पुट्स (लाल रंग)</span>
+                                        <p class="text-slate-400 leading-relaxed">
+                                            इन-द-मनी पुट (स्ट्राइक &gt; स्पॉट)। मंदी के ब्रेकडाउन के लिए उपयुक्त। उच्च डेल्टा इंडेक्स गिरने पर तीव्र प्रीमियम वृद्धि देता है।
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="p-3.5 rounded-lg bg-cyan-950/40 border border-cyan-700/60 guide-box-info">
+                                    <div class="flex items-center gap-2 font-bold text-cyan-300 text-xs mb-1">
+                                        <i data-lucide="line-chart" class="w-4 h-4 text-cyan-400"></i>
+                                        <span>इंटरएक्टिव लाइव स्ट्राइक चार्टिंग</span>
+                                    </div>
+                                    <p class="text-slate-300 text-xs leading-relaxed">
+                                        ऑप्शन चेन तालिका में किसी भी कॉल (CE) या पुट (PE) पंक्ति पर क्लिक करें! टर्मिनल तुरंत उस विशिष्ट कॉन्ट्रैक्ट का लाइव कैंडलस्टिक चार्ट लोड करता है और उस प्रीमियम के लिए विशेष फाइबोनैचि स्तरों की गणना करता है!
+                                    </p>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        id: "sec_scanner",
+                        short_title: "5. रीयल-टाइम स्कैनर",
+                        title: "5. रीयल-टाइम अवसर स्कैनर और निकटता अलर्ट",
+                        icon: "radar",
+                        html: `
+                            <div class="space-y-4">
+                                <p class="text-slate-300 leading-relaxed">
+                                    मार्केट स्कैनर प्रत्येक कुछ सेकंड में सभी ट्रैक किए गए शेयरों और इंडेक्स कॉन्ट्रैक्ट्स का विश्लेषण करता है:
+                                </p>
+
+                                <div class="space-y-2">
+                                    <div class="flex items-center gap-2 p-2.5 rounded bg-slate-900 border border-slate-800 guide-box-card">
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-yellow-500/20 text-yellow-400 border border-yellow-500 shrink-0">NEAR ENTRY</span>
+                                        <p class="text-slate-400 text-xs">LTP प्रवेश मूल्य के 0.10% के भीतर है। अपने ब्रोकर टर्मिनल पर ऑर्डर तैयार रखें।</p>
+                                    </div>
+
+                                    <div class="flex items-center gap-2 p-2.5 rounded bg-slate-900 border border-slate-800 guide-box-card">
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-500/20 text-cyan-400 border border-cyan-500 shrink-0">ENTRY TRIGGERED</span>
+                                        <p class="text-slate-400 text-xs">मूल्य ने प्रवेश स्तर को पार कर लिया है। सक्रिय ट्रेड प्रगति पर है।</p>
+                                    </div>
+
+                                    <div class="flex items-center gap-2 p-2.5 rounded bg-slate-900 border border-slate-800 guide-box-card">
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500 shrink-0">TARGET 1 ACHIEVED</span>
+                                        <p class="text-slate-400 text-xs">पहला लक्ष्य पूरा हुआ! स्टॉप लॉस को तुरंत खरीद भाव पर लाएं।</p>
+                                    </div>
+
+                                    <div class="flex items-center gap-2 p-2.5 rounded bg-slate-900 border border-slate-800 guide-box-card">
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-red-500/20 text-red-400 border border-red-500 shrink-0">STOP LOSS HIT</span>
+                                        <p class="text-slate-400 text-xs">जोखिम सीमा छू गई। ट्रेड समाप्त और अमान्य चिह्नित।</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        id: "sec_auth",
+                        short_title: "6. स्मार्टएपीआई सेटअप",
+                        title: "6. एंजेल वन स्मार्टएपीआई सेटअप और सुरक्षा",
+                        icon: "shield-check",
+                        html: `
+                            <div class="space-y-4">
+                                <p class="text-slate-300 leading-relaxed">
+                                    हाई-स्पीड लाइव टिक डेटा प्राप्त करने के लिए अपने एंजेल वन स्मार्टएपीआई डेवलपर खाते को कनेक्ट करें:
+                                </p>
+
+                                <div class="space-y-3">
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 guide-box-card">
+                                        <h4 class="font-bold text-white text-xs mb-1">आवश्यक क्रेडेंशियल्स</h4>
+                                        <ul class="list-disc list-inside space-y-1 text-slate-400 text-xs">
+                                            <li><strong>Client ID:</strong> आपका एंजेल वन ट्रेडिंग लॉगिन आईडी।</li>
+                                            <li><strong>API Key:</strong> <a href="https://smartapi.angelbroking.com" target="_blank" class="text-cyan-400 underline">SmartAPI डेवलपर पोर्टल</a> में बनाई गई एपीआई कुंजी।</li>
+                                            <li><strong>Trading PIN:</strong> आपका 4-अंकीय एंजेल वन एमपीआईएन।</li>
+                                            <li><strong>TOTP Code:</strong> गूगल ऑथेंटिकेटर ऐप से प्राप्त 6-अंकीय कोड।</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 guide-box-card">
+                                        <h4 class="font-bold text-white text-xs mb-1">स्वचालित टीओटीपी निर्माण (वैकल्पिक)</h4>
+                                        <p class="text-slate-400 text-xs leading-relaxed">
+                                            आप लॉगिन फॉर्म में अपनी Base32 सीक्रेट की पेस्ट कर सकते हैं। टर्मिनल निर्बाध पुनः कनेक्शन के लिए हर 30 सेकंड में स्वचालित रूप से वैध टीओटीपी टोकन उत्पन्न करेगा!
+                                        </p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-emerald-950/30 border border-emerald-700/60 guide-box-tip">
+                                        <div class="flex items-center gap-1.5 font-bold text-emerald-400 text-xs mb-1">
+                                            <i data-lucide="lock" class="w-4 h-4"></i>
+                                            <span>सुरक्षा और गोपनीयता की गारंटी</span>
+                                        </div>
+                                        <p class="text-slate-300 text-xs leading-relaxed">
+                                            आपके क्रेडेंशियल्स पूरी तरह से आपके स्थानीय सर्वर की मेमोरी में प्रोसेस होते हैं। आपकी कुंजियां कभी भी किसी बाहरी सर्वर पर नहीं भेजी जाती हैं।
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        id: "sec_faqs",
+                        short_title: "7. अक्सर पूछे जाने वाले प्रश्न",
+                        title: "7. अक्सर पूछे जाने वाले प्रश्न और विनियामक जोखिम प्रकटीकरण",
+                        icon: "help-circle",
+                        html: `
+                            <div class="space-y-4">
+                                <div class="space-y-3">
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 guide-box-card">
+                                        <h4 class="font-bold text-cyan-300 text-xs mb-1">प्र: क्या इंटरनेट टूटने पर सिस्टम अपने आप रीकनेक्ट होता है?</h4>
+                                        <p class="text-slate-400 text-xs leading-relaxed">हाँ। टर्मिनल में ऑटो-रीकनेक्शन लॉजिक शामिल है। यदि वेबसॉकेट कनेक्शन टूटता है, तो यह कुछ ही सेकंड में अपने आप पुनः कनेक्ट हो जाता है।</p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 guide-box-card">
+                                        <h4 class="font-bold text-cyan-300 text-xs mb-1">प्र: ऑप्शन चार्ट के स्तर स्पॉट इंडेक्स के स्तरों से अलग क्यों होते हैं?</h4>
+                                        <p class="text-slate-400 text-xs leading-relaxed">स्पॉट इंडेक्स के स्तर इंडेक्स पॉइंट्स में होते हैं (उदा. निफ्टी 24,000), जबकि ऑप्शन कॉन्ट्रैक्ट चार्ट सीधे ऑप्शन प्रीमियम रुपयों में स्तरों की गणना करता है (उदा. 24000 CE के लिए ₹150)।</p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 guide-box-card">
+                                        <h4 class="font-bold text-cyan-300 text-xs mb-1">प्र: क्या मैं इस टर्मिनल से सीधे ऑर्डर दे सकता हूँ?</h4>
+                                        <p class="text-slate-400 text-xs leading-relaxed">यह एक विश्लेषण और निर्णय-सहायक टर्मिनल है। ऑर्डर निष्पादन हमेशा आपके एंजेल वन मोबाइल या वेब प्लेटफॉर्म से किया जाता है।</p>
+                                    </div>
+                                </div>
+
+                                <div class="p-3.5 rounded-lg bg-red-950/40 border border-red-800/80 guide-box-warn">
+                                    <div class="flex items-center gap-1.5 font-bold text-red-400 text-xs mb-1">
+                                        <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+                                        <span>सेबी विनियामक जोखिम प्रकटीकरण (डेरिवेटिव्स)</span>
+                                    </div>
+                                    <p class="text-slate-300 text-xs leading-relaxed">
+                                        • इक्विटी फ्यूचर्स और ऑप्शंस सेगमेंट में 10 में से 9 व्यक्तिगत ट्रेडर्स को शुद्ध घाटा होता है।<br>
+                                        • शुद्ध घाटे के अलावा, घाटे में रहने वाले ट्रेडर्स ने लेन-देन लागत के रूप में अतिरिक्त 28% खर्च किया।<br>
+                                        • हमेशा सख्त स्टॉप लॉस के साथ अनुशासित ट्रेडिंग करें।
+                                    </p>
+                                </div>
+                            </div>
+                        `
+                    }
+                ]
+            },
+            gu: {
+                title: "સ્ટ્રેટેજી અને માર્કેટ એનાલિસિસ માર્ગદર્શિકા",
+                subtitle: "૬ ફિબોનાકી લેવલ્સ, ઓપ્શન ચેઇન અને રીઅલ-ટાઇમ સ્કેનર માટે સંપૂર્ણ સંસ્થાકીય વપરાશકર્તા માર્ગદર્શિકા.",
+                search_placeholder: "માર્ગદર્શિકા વિષયો, લેવલ્સ, નિયમો, પ્રશ્નોત્તરી શોધો...",
+                prev: "પાછળ",
+                next: "આગળ",
+                close: "બંધ કરો",
+                section_label: "વિભાગ",
+                of_label: "માંથી",
+                no_results: "તમારી શોધ માટે કોઈ વિષય મળ્યો નથી.",
+                sections: [
+                    {
+                        id: "sec_overview",
+                        short_title: "૧. પરિચય અને આર્કિટેક્ચર",
+                        title: "૧. પ્લેટફોર્મ પરિચય અને આર્કિટેક્ચર",
+                        icon: "layout-dashboard",
+                        html: `
+                            <div class="space-y-4">
+                                <p class="text-slate-300 leading-relaxed">
+                                    <strong>FIB-PRECISION F&O India</strong> માં આપનું હાર્દિક સ્વાગત છે. આ એક અત્યંત ચોક્કસ અલ્ગોરિધમિક ટ્રેડિંગ ટર્મિનલ છે જે ખાસ ભારતીય ઇક્વિટી અને ડેરિવેટિવ્ઝ (F&O) ટ્રેડર્સ માટે તૈયાર કરવામાં આવ્યું છે. આ પ્લેટફોર્મ <strong>એન્જલ વન સ્માર્ટએપીઆઈ વેબસોકેટ</strong> સાથે સીધું જોડાઈને લાઇવ ટિક ડેટા મેળવે છે અને આપમેળે ગાણિતિક <strong>ફિબોનાકી સ્વિંગ કિરણો</strong> ($0, 0.236, 1.0, 1.618$) ની ગણતરી કરે છે.
+                                </p>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    <div class="p-3 rounded-lg bg-slate-900 border border-cyan-900/60 guide-box-card">
+                                        <div class="flex items-center gap-2 font-bold text-cyan-400 mb-1">
+                                            <i data-lucide="zap" class="w-4 h-4"></i>
+                                            <span>લાઇવ ટિક સ્ટ્રીમિંગ</span>
+                                        </div>
+                                        <p class="text-slate-400 text-xs leading-relaxed">
+                                            એન્જલ વનના સર્વર્સ સાથે સીધું વેબસોકેટ કનેક્શન. નિફ્ટી, બેંકનિફ્ટી, ફિનનિફ્ટી અને તમામ સક્રિય એફએન્ડઓ સ્ટ્રાઈક કોન્ટ્રેક્ટ્સ માટે માઇક્રોસેકન્ડ ટિક અપડેટ્સ.
+                                        </p>
+                                    </div>
+                                    <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 guide-box-card">
+                                        <div class="flex items-center gap-2 font-bold text-amber-400 mb-1">
+                                            <i data-lucide="clock" class="w-4 h-4"></i>
+                                            <span>ભારતીય શેરબજાર ટ્રેડિંગ કલાકો (IST)</span>
+                                        </div>
+                                        <p class="text-slate-400 text-xs leading-relaxed">
+                                            પ્રી-ઓપન સત્ર: <strong>સવારે ૦૯:૦૦ થી ૦૯:૦૮ IST</strong><br>
+                                            રેગ્યુલર સેશન: <strong>સવારે ૦૯:૧૫ થી બપોરે ૦૩:૩૦ IST (સોમ–શુક્ર)</strong><br>
+                                            બજારના કલાકો પૂર્ણ થયા પછી, ટર્મિનલ સત્તાવાર બંધ ભાવ સાથે "MARKET CLOSED" સ્થિતિ દર્શાવે છે.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="p-3.5 rounded-lg bg-slate-900/80 border border-cyan-800/60 guide-box-card">
+                                    <h4 class="font-bold text-white text-xs mb-1.5 flex items-center gap-1.5">
+                                        <i data-lucide="cpu" class="w-4 h-4 text-cyan-400"></i>
+                                        <span>ચોક્કસ ગાણિતિક વ્યૂહરચના</span>
+                                    </h4>
+                                    <p class="text-slate-400 text-xs leading-relaxed">
+                                        કોઈપણ વ્યક્તિગત અનુમાન કે અટકળ વગર, આ પ્લેટફોર્મ આપમેળે હાઈ-ટુ-લો અને લો-ટુ-હાઈ સ્વિંગ પિવોટ્સ ગણે છે. ચાર્ટ પર દેખાતું દરેક લેવલ ચોક્કસ ફિબોનાકી ગુણોત્તર પર આધારિત છે.
+                                    </p>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        id: "sec_levels",
+                        short_title: "૨. ૬ મુખ્ય ભાવ સ્તરો",
+                        title: "૨. ૬ મુખ્ય ફિબોનાકી સ્ટ્રેટેજી પ્રાઇસ લેવલ્સ",
+                        icon: "layers",
+                        html: `
+                            <div class="space-y-4">
+                                <p class="text-slate-300 leading-relaxed">
+                                    દરેક સિમ્બોલ માટે ૪ ગાણિતિક ફિબોનાકી કિરણો ($0.000, 0.236, 1.000, 1.618$) ની ગણતરી કરવામાં આવે છે, જેના દ્વારા ચાર્ટ અને સ્કેનર પર ૬ નિર્ણાયક ભાવ સ્તરો નિર્ધારિત થાય છે:
+                                </p>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                                    <div class="p-3 rounded bg-slate-950 border border-yellow-800/80 guide-box-card">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="font-bold text-yellow-400 text-xs">🟡 પ્રવેશ ભાવ (Entry Price)</span>
+                                            <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-yellow-950 text-yellow-300 border border-yellow-800">ટ્રિગર રે</span>
+                                        </div>
+                                        <p class="text-slate-400 text-xs leading-relaxed">
+                                            મુખ્ય બ્રેકઆઉટ પુષ્ટિ રેખા. બુલિશ સેટઅપમાં, ભાવ આ સ્તરથી ઉપર ટ્રેડ થાય ત્યારે કૉલ (Buy CE) ટ્રિગર થાય છે. બેરિશ સેટઅપમાં, ભાવ આ સ્તરથી નીચે તૂટે ત્યારે પુટ (Buy PE) ટ્રિગર થાય છે.
+                                        </p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-950 border border-red-800/80 guide-box-card">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="font-bold text-red-400 text-xs">🔴 સ્ટોપ લોસ - SL (જોખમ સીમા)</span>
+                                            <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-red-950 text-red-300 border border-red-800">જોખમ મર્યાદા</span>
+                                        </div>
+                                        <p class="text-slate-400 text-xs leading-relaxed">
+                                            સખત મૂડી સુરક્ષા રેખા. જો સ્પોટ કે પ્રીમિયમ ભાવ આ સ્તરને ટચ કરે તો કોઈપણ ભાવના કે ખચકાટ વગર તાત્કાલિક ટ્રેડમાંથી બહાર નીકળી જવું.
+                                        </p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-950 border border-green-800/80 guide-box-card">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="font-bold text-green-400 text-xs">🟢 ટાર્ગેટ ૧ - T1 (0.236 ગુણોત્તર)</span>
+                                            <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-green-950 text-green-300 border border-green-800">0.236</span>
+                                        </div>
+                                        <p class="text-slate-400 text-xs leading-relaxed">
+                                            પ્રાથમિક સુરક્ષિત લક્ષ્યાંક. <strong>નિયમ:</strong> ટાર્ગેટ ૧ પર ભાવ પહોંચતા જ સ્ટોપ લોસને પોતાના પ્રવેશ ભાવ (Breakeven / Cost) પર ખસેડી દો જેથી ટ્રેડ સંપૂર્ણ જોખમ-મુક્ત બની જાય.
+                                        </p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-950 border border-emerald-800/80 guide-box-card">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="font-bold text-emerald-400 text-xs">🟢 ટાર્ગેટ ૨ - T2 (0.618 ગુણોત્તર)</span>
+                                            <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">0.618</span>
+                                        </div>
+                                        <p class="text-slate-400 text-xs leading-relaxed">
+                                            ઊંચી સંભાવના ધરાવતું મોમેન્ટમ ક્ષેત્ર. શ્રેષ્ઠ નિયમ: અહીં 50% આંશિક નફો બુક કરો અને બાકીના લોટ્સને ટ્રેઇલ કરો.
+                                        </p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-950 border border-cyan-800/80 guide-box-card">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="font-bold text-cyan-400 text-xs">🔵 ટાર્ગેટ ૩ - T3 (1.000 ગુણોત્તર)</span>
+                                            <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-cyan-950 text-cyan-300 border border-cyan-800">1.000</span>
+                                        </div>
+                                        <p class="text-slate-400 text-xs leading-relaxed">
+                                            સંપૂર્ણ ૧૦૦% સ્વિંગ ચક્ર પૂર્ણાહુતિ સ્તર. આ વિસ્તારમાં મજબૂત સંસ્થાકીય સપોર્ટ કે રેઝિસ્ટન્સ જોવા મળે છે.
+                                        </p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-950 border border-purple-800/80 guide-box-card">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="font-bold text-purple-400 text-xs">🟣 ટાર્ગેટ ૪ - T4 (1.618 વિસ્તાર)</span>
+                                            <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-purple-950 text-purple-300 border border-purple-800">1.618</span>
+                                        </div>
+                                        <p class="text-slate-400 text-xs leading-relaxed">
+                                            ગોલ્ડન રેશિયો વિસ્તાર. બાકી રહેલા ટ્રેઇલિંગ લોટ્સ માટે અંતિમ નફો બુકિંગ ક્ષેત્ર.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        id: "sec_rules",
+                        short_title: "૩. અમલીકરણ નિયમો",
+                        title: "૩. ટ્રેડ અમલીકરણ નિયમો અને વર્કફ્લો",
+                        icon: "zap",
+                        html: `
+                            <div class="space-y-4">
+                                <p class="text-slate-300 leading-relaxed">
+                                    બુલિશ (Buy CE) અને બેરિશ (Buy PE) બંને તકો માટે આ ૫-પગલાં શિસ્તબદ્ધ ટ્રેડિંગ પદ્ધતિનું પાલન કરો:
+                                </p>
+
+                                <div class="space-y-3">
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 flex items-start gap-3 guide-box-card">
+                                        <div class="w-6 h-6 rounded-full bg-cyan-600 text-white font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">૧</div>
+                                        <div>
+                                            <h4 class="font-bold text-white text-xs mb-1">સ્કેનરમાં તકો શોધો</h4>
+                                            <p class="text-slate-400 text-xs">લાઇવ માર્કેટ સ્કેનર તપાસો. BULLISH અથવા BEARISH ફિલ્ટર લાગુ કરો. <span class="text-yellow-400 font-bold">NEAR ENTRY</span> બેજ વાળી પંક્તિઓ પર ધ્યાન આપો (LTP પ્રવેશ ભાવથી ૦.૧૦% ની અંદર).</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 flex items-start gap-3 guide-box-card">
+                                        <div class="w-6 h-6 rounded-full bg-cyan-600 text-white font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">૨</div>
+                                        <div>
+                                            <h4 class="font-bold text-white text-xs mb-1">બ્રેકઆઉટ પુષ્ટિ અને ઓપ્શન પસંદગી</h4>
+                                            <p class="text-slate-400 text-xs">
+                                                • <strong>બુલિશ સેટઅપ (LTP &gt; Entry):</strong> ATM અથવા 1 સ્ટ્રાઈક ITM કૉલ ઓપ્શન (Buy CE) ખરીદો.<br>
+                                                • <strong>બેરિશ સેટઅપ (LTP &lt; Entry):</strong> ATM અથવા 1 સ્ટ્રાઈક ITM પુટ ઓપ્શન (Buy PE) ખરીદો.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 flex items-start gap-3 guide-box-card">
+                                        <div class="w-6 h-6 rounded-full bg-cyan-600 text-white font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">૩</div>
+                                        <div>
+                                            <h4 class="font-bold text-white text-xs mb-1">તરત જ સ્ટોપ લોસ ઓર્ડર મૂકો</h4>
+                                            <p class="text-slate-400 text-xs">સ્ટોપ લોસ વગર ક્યારેય ટ્રેડ ન કરો. ટર્મિનલ લાલ રંગમાં ચોક્કસ SL ભાવ દર્શાવે છે. તમારા બ્રોકર ખાતામાં તે જ ભાવે SL-M ઓર્ડર સેટ કરો.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 flex items-start gap-3 guide-box-card">
+                                        <div class="w-6 h-6 rounded-full bg-cyan-600 text-white font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">૪</div>
+                                        <div>
+                                            <h4 class="font-bold text-white text-xs mb-1">ટાર્ગેટ ૧ (T1) પર SL ખરીદ કિંમતે લાવો</h4>
+                                            <p class="text-slate-400 text-xs">ભાવ ટાર્ગેટ ૧ ને સ્પર્શે એટલે તરત સ્ટોપ લોસને પોતાની ખરીદ કિંમત (Cost) પર લાવી દો જેથી મૂડી સંપૂર્ણ સુરક્ષિત બને.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 flex items-start gap-3 guide-box-card">
+                                        <div class="w-6 h-6 rounded-full bg-cyan-600 text-white font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">૫</div>
+                                        <div>
+                                            <h4 class="font-bold text-white text-xs mb-1">T2, T3 અને T4 પર ક્રમશઃ નફો બુક કરો</h4>
+                                            <p class="text-slate-400 text-xs">T2 પર 50% નફો લો. બાકીના લોટ્સને ટ્રેઇલ કરતાં કરતાં T4 પર સંપૂર્ણ પોઝિશન સ્ક્વેર ઓફ કરો.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        id: "sec_chain",
+                        short_title: "૪. ઓપ્શન ચેઇન અને ચાર્ટિંગ",
+                        title: "૪. ઓપ્શન ચેઇન મેટ્રિક્સ અને લાઈવ કોન્ટ્રેક્ટ ચાર્ટિંગ",
+                        icon: "table-properties",
+                        html: `
+                            <div class="space-y-4">
+                                <p class="text-slate-300 leading-relaxed">
+                                    ઓપ્શન ચેઇન કૉલ (CE) અને પુટ (PE) પ્રીમિયમ, લિક્વિડિટી અને ડેલ્ટા પરિસ્થિતિનું રીઅલ-ટાઇમ વિહંગાવલોકન પૂરું પાડે છે:
+                                </p>
+
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 text-xs">
+                                    <div class="p-3 rounded bg-slate-900 border border-cyan-800/80 guide-box-card">
+                                        <span class="font-bold text-cyan-400 block mb-1">ATM સ્ટ્રાઈક (વાદળી પંક્તિ)</span>
+                                        <p class="text-slate-400 leading-relaxed">
+                                            વર્તમાન સ્પોટ ભાવની સૌથી નજીકનો સ્ટ્રાઈક. સૌથી વધુ ટ્રેડિંગ વોલ્યુમ, ઓછો બિડ-આસ્ક સ્પ્રેડ અને ~૦.૫૦ નો આદર્શ ડેલ્ટા ધરાવે છે.
+                                        </p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-900 border border-emerald-800/80 guide-box-card">
+                                        <span class="font-bold text-emerald-400 block mb-1">ITM કૉલ્સ (લીલો રંગ)</span>
+                                        <p class="text-slate-400 leading-relaxed">
+                                            ઇન-ધ-મની કૉલ (સ્ટ્રાઈક &lt; સ્પોટ). તેજીના ટ્રેન્ડ માટે ઉત્તમ. આંતરિક મૂલ્ય (Intrinsic Value) હોવાથી થીટા ડીકે ઘણું ઓછું થાય છે.
+                                        </p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-900 border border-rose-800/80 guide-box-card">
+                                        <span class="font-bold text-rose-400 block mb-1">ITM પુટ્સ (લાલ રંગ)</span>
+                                        <p class="text-slate-400 leading-relaxed">
+                                            ઇન-ધ-મની પુટ (સ્ટ્રાઈક &gt; સ્પોટ). મંદીના બ્રેકડાઉન માટે યોગ્ય. ઊંચો ડેલ્ટા ઇન્ડેક્સ ઘટતાં ઝડપી પ્રીમિયમ વધારો આપે છે.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="p-3.5 rounded-lg bg-cyan-950/40 border border-cyan-700/60 guide-box-info">
+                                    <div class="flex items-center gap-2 font-bold text-cyan-300 text-xs mb-1">
+                                        <i data-lucide="line-chart" class="w-4 h-4 text-cyan-400"></i>
+                                        <span>ઇન્ટરેક્ટિવ લાઇવ સ્ટ્રાઈક ચાર્ટિંગ</span>
+                                    </div>
+                                    <p class="text-slate-300 text-xs leading-relaxed">
+                                        ઓપ્શન ચેઇન ટેબલમાં કોઈપણ કૉલ (CE) કે પુટ (PE) પંક્તિ પર ક્લિક કરો! ટર્મિનલ તરત જ તે કોન્ટ્રેક્ટનો લાઇવ કેન્ડલસ્ટિક ચાર્ટ ખોલી આપશે અને તે પ્રીમિયમ માટે વિશેષ ફિબોનાકી લેવલ્સ પ્લોટ કરશે!
+                                    </p>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        id: "sec_scanner",
+                        short_title: "૫. રીઅલ-ટાઇમ સ્કેનર",
+                        title: "૫. રીઅલ-ટાઇમ માર્કેટ સ્કેનર અને પ્રોક્સિમિટી એલર્ટ્સ",
+                        icon: "radar",
+                        html: `
+                            <div class="space-y-4">
+                                <p class="text-slate-300 leading-relaxed">
+                                    માર્કેટ સ્કેનર દર થોડી સેકન્ડે તમામ ટ્રેક કરાયેલા શેરો અને ઇન્ડેક્સ કોન્ટ્રેક્ટ્સનું સ્કેનિંગ કરે છે:
+                                </p>
+
+                                <div class="space-y-2">
+                                    <div class="flex items-center gap-2 p-2.5 rounded bg-slate-900 border border-slate-800 guide-box-card">
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-yellow-500/20 text-yellow-400 border border-yellow-500 shrink-0">NEAR ENTRY</span>
+                                        <p class="text-slate-400 text-xs">LTP પ્રવેશ ભાવના ૦.૧૦% અંતરમાં છે. તમારા બ્રોકર ખાતામાં ઓર્ડર તૈયાર રાખો.</p>
+                                    </div>
+
+                                    <div class="flex items-center gap-2 p-2.5 rounded bg-slate-900 border border-slate-800 guide-box-card">
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-500/20 text-cyan-400 border border-cyan-500 shrink-0">ENTRY TRIGGERED</span>
+                                        <p class="text-slate-400 text-xs">ભાવે પ્રવેશ લેવલ ક્રોસ કર્યું છે. સક્રિય ટ્રેડ ચાલુ છે.</p>
+                                    </div>
+
+                                    <div class="flex items-center gap-2 p-2.5 rounded bg-slate-900 border border-slate-800 guide-box-card">
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500 shrink-0">TARGET 1 ACHIEVED</span>
+                                        <p class="text-slate-400 text-xs">પહેલો ટાર્ગેટ સફળતાપૂર્વક હિટ થયો! સ્ટોપ લોસને તાત્કાલિક ખરીદ ભાવ પર ખસેડો.</p>
+                                    </div>
+
+                                    <div class="flex items-center gap-2 p-2.5 rounded bg-slate-900 border border-slate-800 guide-box-card">
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-red-500/20 text-red-400 border border-red-500 shrink-0">STOP LOSS HIT</span>
+                                        <p class="text-slate-400 text-xs">જોખમ મર્યાદા સ્પર્શી ગઈ. ટ્રેડ સમાપ્ત અને અમાન્ય જાહેર થયો.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        id: "sec_auth",
+                        short_title: "૬. સ્માર્ટએપીઆઈ સેટઅપ",
+                        title: "૬. એન્જલ વન સ્માર્ટએપીઆઈ સેટઅપ અને સુરક્ષા",
+                        icon: "shield-check",
+                        html: `
+                            <div class="space-y-4">
+                                <p class="text-slate-300 leading-relaxed">
+                                    હાઇ-સ્પીડ લાઇવ ટિક ડેટા મેળવવા માટે તમારું એન્જલ વન સ્માર્ટએપીઆઈ એકાઉન્ટ કનેક્ટ કરો:
+                                </p>
+
+                                <div class="space-y-3">
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 guide-box-card">
+                                        <h4 class="font-bold text-white text-xs mb-1">જરૂરી વિગતો</h4>
+                                        <ul class="list-disc list-inside space-y-1 text-slate-400 text-xs">
+                                            <li><strong>Client ID:</strong> તમારું એન્જલ વન ટ્રેડિંગ લોગીન આઈડી.</li>
+                                            <li><strong>API Key:</strong> <a href="https://smartapi.angelbroking.com" target="_blank" class="text-cyan-400 underline">SmartAPI ડેવલપર પોર્ટલ</a> માં જનરેટ કરેલ કી.</li>
+                                            <li><strong>Trading PIN:</strong> તમારો 4-અંકનો એન્જલ વન MPIN.</li>
+                                            <li><strong>TOTP Code:</strong> ગૂગલ ઓથેન્ટિકેટર એપ દ્વારા મળતો 6-અંકનો કોડ.</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 guide-box-card">
+                                        <h4 class="font-bold text-white text-xs mb-1">ઓટોમેટિક TOTP જનરેશન (વૈકલ્પિક)</h4>
+                                        <p class="text-slate-400 text-xs leading-relaxed">
+                                            તમે તમારી Base32 સિક્રેટ કી લોગીન ફોર્મમાં સેવ કરી શકો છો. ટર્મિનલ આપમેળે દર 30 સેકન્ડે માન્ય TOTP કોડ જનરેટ કરી લેશે!
+                                        </p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-emerald-950/30 border border-emerald-700/60 guide-box-tip">
+                                        <div class="flex items-center gap-1.5 font-bold text-emerald-400 text-xs mb-1">
+                                            <i data-lucide="lock" class="w-4 h-4"></i>
+                                            <span>સુરક્ષા અને ગોપનીયતાની ખાતરી</span>
+                                        </div>
+                                        <p class="text-slate-300 text-xs leading-relaxed">
+                                            તમારી વિગતો માત્ર તમારા લોકલ સર્વરની મેમરીમાં જ રહે છે. તમારી કોઈપણ કી બહાર શેર કે સેવ થતી નથી.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        id: "sec_faqs",
+                        short_title: "૭. પ્રશ્નોત્તરી & જોખમ",
+                        title: "૭. વારંવાર પૂછાતા પ્રશ્નો અને સેબી જોખમ માર્ગદર્શિકા",
+                        icon: "help-circle",
+                        html: `
+                            <div class="space-y-4">
+                                <div class="space-y-3">
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 guide-box-card">
+                                        <h4 class="font-bold text-cyan-300 text-xs mb-1">પ્ર: શું ઇન્ટરનેટ બંધ થાય તો સિસ્ટમ આપોઆપ ફરી જોડાય છે?</h4>
+                                        <p class="text-slate-400 text-xs leading-relaxed">હા. ટર્મિનલમાં સ્માર્ટ ઓટો-રીકનેક્શન ફીચર છે. જો વેબસોકેટ કનેક્શન છૂટી જાય તો થોડી જ સેકન્ડોમાં આપમેળે ફરી કનેક્ટ થઈ જાય છે.</p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 guide-box-card">
+                                        <h4 class="font-bold text-cyan-300 text-xs mb-1">પ્ર: ઓપ્શન ચાર્ટના લેવલ્સ સ્પોટ ઇન્ડેક્સથી અલગ કેમ હોય છે?</h4>
+                                        <p class="text-slate-400 text-xs leading-relaxed">સ્પોટ ઇન્ડેક્સ લેવલ્સ ઇન્ડેક્સ પોઇન્ટ્સમાં હોય છે (દા.ત. નિફ્ટી 24,000), જ્યારે ઓપ્શન ચાર્ટ સીધા ઓપ્શન પ્રીમિયમના રૂપિયામાં લેવલ્સ ગણે છે (દા.ત. 24000 CE માટે ₹150).</p>
+                                    </div>
+
+                                    <div class="p-3 rounded bg-slate-900 border border-slate-800 guide-box-card">
+                                        <h4 class="font-bold text-cyan-300 text-xs mb-1">પ્ર: શું હું આ ટર્મિનલમાંથી સીધા ઓર્ડર આપી શકું?</h4>
+                                        <p class="text-slate-400 text-xs leading-relaxed">આ એક એનાલિસિસ અને નિર્ણય-સહાયક ટર્મિનલ છે. સુરક્ષાના ભાગરૂપે ઓર્ડર તમારા અધિકૃત એન્જલ વન એકાઉન્ટમાંથી જ મૂકવાના રહે છે.</p>
+                                    </div>
+                                </div>
+
+                                <div class="p-3.5 rounded-lg bg-red-950/40 border border-red-800/80 guide-box-warn">
+                                    <div class="flex items-center gap-1.5 font-bold text-red-400 text-xs mb-1">
+                                        <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+                                        <span>સેબી વિનિયમન જોખમ માર્ગદર્શિકા (ડેરિવેટિવ્ઝ)</span>
+                                    </div>
+                                    <p class="text-slate-300 text-xs leading-relaxed">
+                                        • ઇક્વિટી ફ્યુચર્સ અને ઓપ્શન્સ સેગમેન્ટમાં 10 માંથી 9 વ્યક્તિગત ટ્રેડર્સને ચોખ્ખી ખોટ થાય છે.<br>
+                                        • ખોટ કરનારા ટ્રેડર્સે ટ્રાન્ઝેક્શન ખર્ચ તરીકે કુલ ખોટના વધારાના 28% જેટલો ખર્ચ કર્યો હતો.<br>
+                                        • હંમેશા શિસ્તબદ્ધ સ્ટોપ લોસ અને મર્યાદિત જોખમ સાથે ટ્રેડિંગ કરો.
+                                    </p>
+                                </div>
+                            </div>
+                        `
+                    }
+                ]
+            }
+        };
+
+        // RENDER GUIDE ENGINE
+        function setGuideLanguage(lang) {
+            if (!GUIDE_DATA[lang]) lang = 'en';
+            currentGuideLang = lang;
+            localStorage.setItem('user_guide_lang', lang);
+            renderGuide();
+            if (window.lucide) lucide.createIcons();
+        }
+
+        function renderGuide() {
+            const data = GUIDE_DATA[currentGuideLang] || GUIDE_DATA['en'];
+            
+            // Update modal title and subtitle
+            document.getElementById('guideModalTitle').innerText = data.title;
+            document.getElementById('guideModalSubtitle').innerText = data.subtitle;
+            document.getElementById('guideSearchInput').placeholder = data.search_placeholder;
+            document.getElementById('guidePrevLabel').innerText = data.prev;
+            document.getElementById('guideNextLabel').innerText = data.next;
+            document.getElementById('guideCloseLabel').innerText = data.close;
+
+            // Update language selector button active states
+            ['en', 'hi', 'gu'].forEach(l => {
+                const btn = document.getElementById(`langBtn-${l}`);
+                if (btn) {
+                    if (l === currentGuideLang) {
+                        btn.className = "guide-lang-btn px-2.5 py-1 text-xs font-bold rounded transition bg-cyan-600 text-white shadow-sm";
+                    } else {
+                        btn.className = "guide-lang-btn px-2.5 py-1 text-xs font-semibold rounded transition text-slate-400 hover:text-white hover:bg-slate-800";
+                    }
+                }
+            });
+
+            // Populate Desktop Sidebar
+            const sidebar = document.getElementById('guideSidebar');
+            if (sidebar) {
+                sidebar.innerHTML = data.sections.map(sec => {
+                    const isActive = sec.id === currentGuideSectionId;
+                    return `
+                        <button onclick="selectGuideSection('${sec.id}')" class="guide-nav-item w-full flex items-center gap-2 px-2.5 py-2 rounded text-left text-xs transition ${isActive ? 'bg-cyan-700 text-white font-bold shadow' : 'text-slate-400 hover:text-white hover:bg-slate-900'}">
+                            <i data-lucide="${sec.icon}" class="w-4 h-4 shrink-0"></i>
+                            <span class="truncate">${sec.short_title}</span>
+                        </button>
+                    `;
+                }).join('');
+            }
+
+            // Populate Mobile Select
+            const mobileSelect = document.getElementById('guideMobileSectionSelect');
+            if (mobileSelect) {
+                mobileSelect.innerHTML = data.sections.map(sec => `
+                    <option value="${sec.id}" ${sec.id === currentGuideSectionId ? 'selected' : ''}>${sec.short_title}</option>
+                `).join('');
+            }
+
+            // Render Body Content
+            renderGuideContentBody();
+        }
+
+        function renderGuideContentBody() {
+            const data = GUIDE_DATA[currentGuideLang] || GUIDE_DATA['en'];
+            const contentBody = document.getElementById('guideContentBody');
+            if (!contentBody) return;
+
+            // If user is searching
+            if (guideSearchQuery.trim()) {
+                const q = guideSearchQuery.toLowerCase();
+                const matched = data.sections.filter(sec => 
+                    sec.title.toLowerCase().includes(q) || 
+                    sec.short_title.toLowerCase().includes(q) || 
+                    sec.html.toLowerCase().includes(q)
+                );
+
+                if (matched.length === 0) {
+                    contentBody.innerHTML = `
+                        <div class="p-8 text-center text-slate-500 flex flex-col items-center justify-center">
+                            <i data-lucide="search-x" class="w-10 h-10 mb-2 text-slate-600"></i>
+                            <p class="font-bold text-sm text-slate-400">${data.no_results}</p>
+                            <button onclick="clearGuideSearch()" class="mt-3 text-xs text-cyan-400 underline font-semibold">Clear Search Filter</button>
+                        </div>
+                    `;
+                    updateFooterNav(-1, -1);
+                    return;
+                }
+
+                contentBody.innerHTML = matched.map(sec => `
+                    <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 space-y-3 guide-card">
+                        <div class="flex items-center gap-2 text-cyan-400 font-bold border-b border-slate-800 pb-2">
+                            <i data-lucide="${sec.icon}" class="w-4 h-4"></i>
+                            <span>${sec.title}</span>
+                        </div>
+                        <div>${sec.html}</div>
+                    </div>
+                `).join('');
+
+                updateFooterNav(-1, -1);
+                if (window.lucide) lucide.createIcons();
+                return;
+            }
+
+            // Normal Section View
+            let activeSec = data.sections.find(s => s.id === currentGuideSectionId);
+            if (!activeSec) {
+                activeSec = data.sections[0];
+                currentGuideSectionId = activeSec.id;
+            }
+
+            const activeIdx = data.sections.findIndex(s => s.id === currentGuideSectionId);
+            updateFooterNav(activeIdx, data.sections.length);
+
+            contentBody.innerHTML = `
+                <div class="space-y-4">
+                    <div class="flex items-center gap-2 text-cyan-400 font-bold border-b border-slate-800 pb-3">
+                        <i data-lucide="${activeSec.icon}" class="w-5 h-5"></i>
+                        <h2 class="text-base sm:text-lg text-white font-bold">${activeSec.title}</h2>
+                    </div>
+                    <div>${activeSec.html}</div>
+                </div>
+            `;
+
+            if (window.lucide) lucide.createIcons();
+        }
+
+        function selectGuideSection(secId) {
+            currentGuideSectionId = secId;
+            guideSearchQuery = '';
+            const searchInput = document.getElementById('guideSearchInput');
+            if (searchInput) searchInput.value = '';
+            document.getElementById('guideSearchClearBtn')?.classList.add('hidden');
+            renderGuide();
+        }
+
+        function navigateGuide(delta) {
+            const data = GUIDE_DATA[currentGuideLang] || GUIDE_DATA['en'];
+            const curIdx = data.sections.findIndex(s => s.id === currentGuideSectionId);
+            const newIdx = curIdx + delta;
+            if (newIdx >= 0 && newIdx < data.sections.length) {
+                selectGuideSection(data.sections[newIdx].id);
+            }
+        }
+
+        function updateFooterNav(curIdx, total) {
+            const prevBtn = document.getElementById('guidePrevBtn');
+            const nextBtn = document.getElementById('guideNextBtn');
+            const counter = document.getElementById('guideSectionCounter');
+            const data = GUIDE_DATA[currentGuideLang] || GUIDE_DATA['en'];
+
+            if (curIdx < 0) {
+                // Search mode
+                if (prevBtn) prevBtn.disabled = true;
+                if (nextBtn) nextBtn.disabled = true;
+                if (counter) counter.innerText = `Filtered Search Results`;
+                return;
+            }
+
+            if (prevBtn) prevBtn.disabled = (curIdx === 0);
+            if (nextBtn) nextBtn.disabled = (curIdx === total - 1);
+            if (counter) counter.innerText = `${data.section_label} ${curIdx + 1} ${data.of_label} ${total}`;
+        }
+
+        function handleGuideSearch(val) {
+            guideSearchQuery = val;
+            const clearBtn = document.getElementById('guideSearchClearBtn');
+            if (val.trim()) {
+                clearBtn?.classList.remove('hidden');
+            } else {
+                clearBtn?.classList.add('hidden');
+            }
+            renderGuideContentBody();
+        }
+
+        function clearGuideSearch() {
+            guideSearchQuery = '';
+            const input = document.getElementById('guideSearchInput');
+            if (input) input.value = '';
+            document.getElementById('guideSearchClearBtn')?.classList.add('hidden');
+            renderGuideContentBody();
+        }
+
+        // ========================================================
+        // MODAL BACKDROP, ESCAPE KEY & MUTUAL EXCLUSIVITY HANDLERS
+        // ========================================================
+        function handleBackdropClick(e, modalId) {
+            if (e.target.id === modalId) {
+                if (modalId === 'settingsModal') closeSettingsModal();
+                else if (modalId === 'helpGuideModal') closeHelpGuideModal();
+                else if (modalId === 'loginModal') closeLoginModal();
+            }
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeSettingsModal();
+                closeHelpGuideModal();
+                closeLoginModal();
+            }
+        });
+
+        function openSettingsModal(e) {
+            if (e) {
+                if (e.preventDefault) e.preventDefault();
+                if (e.stopPropagation) e.stopPropagation();
+            }
+            closeHelpGuideModal();
+            closeLoginModal();
+            const modal = document.getElementById('settingsModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function closeSettingsModal() {
+            const modal = document.getElementById('settingsModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        function openHelpGuideModal(e) {
+            if (e) {
+                if (e.preventDefault) e.preventDefault();
+                if (e.stopPropagation) e.stopPropagation();
+            }
+            closeSettingsModal();
+            closeLoginModal();
             const modal = document.getElementById('helpGuideModal');
             if (modal) {
                 modal.classList.remove('hidden');
                 modal.classList.add('flex');
+                renderGuide();
                 if (window.lucide) lucide.createIcons();
             }
         }
 
         function closeHelpGuideModal() {
             const modal = document.getElementById('helpGuideModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        function openLoginModal(e) {
+            if (e) {
+                if (e.preventDefault) e.preventDefault();
+                if (e.stopPropagation) e.stopPropagation();
+            }
+            closeSettingsModal();
+            closeHelpGuideModal();
+            const modal = document.getElementById('loginModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function closeLoginModal() {
+            const modal = document.getElementById('loginModal');
             if (modal) {
                 modal.classList.add('hidden');
                 modal.classList.remove('flex');
@@ -1254,12 +2628,6 @@
                 document.getElementById('navBtn-scanner').classList.add('active');
             }
         }
-
-        // Modal triggers
-        function openLoginModal() { document.getElementById('loginModal').classList.remove('hidden'); document.getElementById('loginModal').classList.add('flex'); }
-        function closeLoginModal() { document.getElementById('loginModal').classList.add('hidden'); document.getElementById('loginModal').classList.remove('flex'); }
-        function openSettingsModal() { document.getElementById('settingsModal').classList.remove('hidden'); document.getElementById('settingsModal').classList.add('flex'); }
-        function closeSettingsModal() { document.getElementById('settingsModal').classList.add('hidden'); document.getElementById('settingsModal').classList.remove('flex'); }
 
         // Angel One SmartAPI Login
         async function submitAngelLogin() {
