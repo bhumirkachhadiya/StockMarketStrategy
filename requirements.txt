@@ -3,7 +3,6 @@ Flask-SocketIO==5.7.0
 smartapi-python==1.5.5
 websocket-client==1.9.2
 requests==2.34.2
-gunicorn==26.2.0
 simple-websocket==1.1.0
 pyotp==2.10.0
 rich==15.0.0
