@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: stock-market-strategy
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app.py
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: PYTHON_VERSION
+        value: 3.11.9
