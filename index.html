@@ -297,6 +297,34 @@
             border-color: #cbd5e1 !important;
             color: #0f172a !important;
         }
+        body.light-theme #btnScanNow {
+            background-color: #0284c7 !important;
+            border: 1px solid #0369a1 !important;
+            color: #ffffff !important;
+            box-shadow: 0 1px 2px rgba(2, 132, 199, 0.25) !important;
+            font-weight: 700 !important;
+        }
+        body.light-theme #btnScanNow:hover {
+            background-color: #0369a1 !important;
+            box-shadow: 0 2px 4px rgba(2, 132, 199, 0.35) !important;
+        }
+        body.light-theme #btnScanNow:active {
+            transform: scale(0.96);
+        }
+        body.light-theme #tabBtn-chart,
+        body.light-theme #tabBtn-chain,
+        body.light-theme #tabBtn-scanner {
+            background-color: #f8fafc;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+        }
+        body.light-theme #tabBtn-chart.bg-cyan-700,
+        body.light-theme #tabBtn-chain.bg-cyan-700,
+        body.light-theme #tabBtn-scanner.bg-cyan-700 {
+            background-color: #0284c7 !important;
+            color: #ffffff !important;
+            border-color: #0369a1 !important;
+        }
         body.light-theme #view-scanner-panel thead {
             background-color: #f8fafc !important;
             border-bottom: 2px solid #cbd5e1 !important;
@@ -866,9 +894,9 @@
                     <option value="ACTIVE">Active Signals</option>
                 </select>
 
-                <button onclick="refreshScannerNow()" class="bg-cyan-700 hover:bg-cyan-600 text-white px-2.5 py-1 rounded text-xs font-bold transition flex items-center gap-1">
-                    <i data-lucide="refresh-cw" class="w-3 h-3"></i>
-                    <span class="hidden sm:inline">Scan</span>
+                <button id="btnScanNow" onclick="refreshScannerNow()" class="bg-cyan-700 hover:bg-cyan-600 text-white px-2.5 py-1 rounded text-xs font-bold transition flex items-center gap-1.5 shadow-sm active:scale-95" title="Refresh Live Scanner">
+                    <i data-lucide="refresh-cw" id="scannerRefreshIcon" class="w-3 h-3 transition-transform"></i>
+                    <span id="scannerRefreshLabel" class="hidden sm:inline">Scan</span>
                 </button>
             </div>
         </div>
@@ -2891,6 +2919,11 @@
 
         // Refresh Market Scanner Results
         async function refreshScannerNow() {
+            const btn = document.getElementById('btnScanNow');
+            const icon = document.getElementById('scannerRefreshIcon');
+            if (icon) icon.classList.add('animate-spin');
+            if (btn) btn.classList.add('opacity-75', 'pointer-events-none');
+
             try {
                 const dir = document.getElementById('filterDirection').value;
                 const status = document.getElementById('filterStatus').value;
@@ -2915,6 +2948,11 @@
 
             } catch (err) {
                 console.warn("[Scanner Error]:", err);
+            } finally {
+                setTimeout(() => {
+                    if (icon) icon.classList.remove('animate-spin');
+                    if (btn) btn.classList.remove('opacity-75', 'pointer-events-none');
+                }, 350);
             }
         }
 
