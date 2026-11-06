@@ -5,3 +5,4 @@ logs/
 data/
 config.json
 .env
+*.egg-info/

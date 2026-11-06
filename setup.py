@@ -5,8 +5,8 @@ setup(
     version="1.0.0",
     py_modules=["worker_shim"],
     entry_points={
-        "gunicorn.workers": [
-            "eventlet = worker_shim:EventletShimWorker",
+        "console_scripts": [
+            "gunicorn = worker_shim:run_gunicorn_shim",
         ],
     },
 )
