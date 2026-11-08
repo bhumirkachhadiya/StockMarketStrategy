@@ -39,8 +39,9 @@ class ScannerService:
         self.store_lock = threading.Lock()
         self.is_scanning = False
         self.proximity_threshold_pct: float = 0.1  # 0.1% proximity default
-        self.auto_refresh_seconds: int = 5
+        self.auto_refresh_seconds: int = 10
         self.last_scan_time: Optional[str] = None
+        self._last_evaluated_ltp: Dict[str, float] = {}
 
         # Register live tick callback with AngelService
         self.angel_service.register_tick_callback(self.on_market_tick)
@@ -241,8 +242,9 @@ class ScannerService:
                             }
                         entry = dict(self.market_store[tok])
 
-                    if entry["ltp"] > 0:
+                    if entry["ltp"] > 0 and (tok not in self._last_evaluated_ltp or self._last_evaluated_ltp[tok] != entry["ltp"]):
                         self._evaluate_instrument(entry)
+                        self._last_evaluated_ltp[tok] = entry["ltp"]
 
                 # Subscribe tokens via SmartWebSocketV2 if authenticated
                 if self.angel_service.is_authenticated and tokens_to_subscribe:

@@ -2,7 +2,10 @@ venv/
 __pycache__/
 *.pyc
 logs/
-data/
+data/*.db
+data/scrip_master.json
+data/indexed_instruments.json
+!data/indexed_instruments.json.gz
 config.json
 .env
 *.egg-info/

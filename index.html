@@ -1153,10 +1153,18 @@
             loadInstrumentData(activeToken, activeSymbol, activeExchange);
             refreshScannerNow();
 
-            setInterval(checkMarketHours, 10000);
-            setInterval(checkAuthStatus, 15000);
-            setInterval(refreshScannerNow, 5000);
-            setInterval(loadIndicesTicker, 8000);
+            setInterval(() => {
+                if (!document.hidden) checkMarketHours();
+            }, 60000);
+            setInterval(() => {
+                if (!document.hidden) checkAuthStatus();
+            }, 30000);
+            setInterval(() => {
+                if (!document.hidden) refreshScannerNow();
+            }, 10000);
+            setInterval(() => {
+                if (!document.hidden) loadIndicesTicker();
+            }, 15000);
         });
 
         // Theme management: Light & Dark Mode

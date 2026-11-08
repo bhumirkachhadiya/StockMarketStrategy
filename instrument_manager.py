@@ -15,6 +15,7 @@ SCRIP_MASTER_URL = "https://margincalculator.angelone.in/OpenAPI_File/files/Open
 CACHE_DIR = os.path.join(os.path.dirname(__file__), "data")
 CACHE_FILE = os.path.join(CACHE_DIR, "scrip_master.json")
 INDEX_CACHE_FILE = os.path.join(CACHE_DIR, "indexed_instruments.json")
+GZ_INDEX_CACHE_FILE = os.path.join(CACHE_DIR, "indexed_instruments.json.gz")
 
 # Verified core Indian indices
 CORE_INDICES = [
@@ -65,6 +66,7 @@ class InstrumentManager:
         self.fo_stocks: List[Dict[str, Any]] = list(DEFAULT_FO_STOCKS)
         self.token_lookup: Dict[str, Dict[str, Any]] = {}
         self.option_contracts: Dict[str, List[Dict[str, Any]]] = {}  # symbol -> list of option contracts
+        self._expiries_cache: Dict[str, List[str]] = {}
         self.is_master_loaded = False
         self.is_downloading = False
         self.last_sync_time: Optional[str] = None
@@ -90,30 +92,50 @@ class InstrumentManager:
         return self.indices + self.fo_stocks
 
     def initialize_master_data(self):
-        """Load from cache if fresh (within 24h) or download from Angel One."""
+        """Load from cache if available or download from Angel One."""
         os.makedirs(CACHE_DIR, exist_ok=True)
-        should_download = True
 
+        # 1. Primary Priority: Compressed pre-indexed cache (boots in 0.1s with minimal RAM)
+        if os.path.exists(GZ_INDEX_CACHE_FILE):
+            try:
+                import gzip
+                print("[InstrumentManager] Loading indexed master data from compressed cache...")
+                with gzip.open(GZ_INDEX_CACHE_FILE, "rt", encoding="utf-8") as f:
+                    cache_data = json.load(f)
+                    self.fo_stocks = cache_data.get("fo_stocks", self.fo_stocks)
+                    self.option_contracts = cache_data.get("option_contracts", {})
+                    for item in self.fo_stocks:
+                        self.token_lookup[str(item["token"])] = item
+                    self.is_master_loaded = True
+                    self.last_sync_time = cache_data.get("sync_time", datetime.now().isoformat())
+                    print(f"[InstrumentManager] Loaded {len(self.fo_stocks)} F&O stocks and option chains from compressed cache.")
+                    return
+            except Exception as e:
+                print(f"[InstrumentManager] Compressed cache load warning: {e}")
+
+        # 2. Secondary Priority: Local uncompressed JSON cache
         if os.path.exists(INDEX_CACHE_FILE):
             try:
-                mtime = os.path.getmtime(INDEX_CACHE_FILE)
-                if (time.time() - mtime) < 86400:  # Fresh within 24h
-                    print("[InstrumentManager] Loading indexed master data from local cache...")
-                    with open(INDEX_CACHE_FILE, "r", encoding="utf-8") as f:
-                        cache_data = json.load(f)
-                        self.fo_stocks = cache_data.get("fo_stocks", self.fo_stocks)
-                        self.option_contracts = cache_data.get("option_contracts", {})
-                        for item in self.fo_stocks:
-                            self.token_lookup[str(item["token"])] = item
-                        self.is_master_loaded = True
-                        self.last_sync_time = cache_data.get("sync_time", datetime.now().isoformat())
-                        print(f"[InstrumentManager] Loaded {len(self.fo_stocks)} F&O stocks and option chains from cache.")
-                        should_download = False
+                print("[InstrumentManager] Loading indexed master data from local cache...")
+                with open(INDEX_CACHE_FILE, "r", encoding="utf-8") as f:
+                    cache_data = json.load(f)
+                    self.fo_stocks = cache_data.get("fo_stocks", self.fo_stocks)
+                    self.option_contracts = cache_data.get("option_contracts", {})
+                    for item in self.fo_stocks:
+                        self.token_lookup[str(item["token"])] = item
+                    self.is_master_loaded = True
+                    self.last_sync_time = cache_data.get("sync_time", datetime.now().isoformat())
+                    print(f"[InstrumentManager] Loaded {len(self.fo_stocks)} F&O stocks and option chains from cache.")
+                    return
             except Exception as e:
                 print(f"[InstrumentManager] Cache load warning: {e}")
 
-        if should_download:
-            self.download_and_index_master()
+        # 3. Cloud safeguard: If on Render / cloud or explicit skip, do not freeze CPU with 100MB download
+        if os.environ.get("RENDER") or os.environ.get("SKIP_SCRIP_DOWNLOAD", "").lower() in ("true", "1"):
+            print("[InstrumentManager] Running with verified core F&O instruments and option chains.")
+            return
+
+        self.download_and_index_master()
 
     def download_and_index_master(self):
         if self.is_downloading:
@@ -231,18 +253,21 @@ class InstrumentManager:
         if not raw_options:
             return {"symbol": symbol, "expiries": [], "selected_expiry": None, "strikes": []}
 
-        # Collect unique expiries and sort them chronologically
-        def parse_exp(exp_str):
-            try:
-                return datetime.strptime(exp_str.strip(), "%d%b%Y")
-            except Exception:
+        # Collect unique expiries and sort them chronologically (memoized to eliminate CPU overhead)
+        if symbol not in self._expiries_cache:
+            def parse_exp(exp_str):
                 try:
-                    return datetime.strptime(exp_str.strip(), "%d-%b-%Y")
+                    return datetime.strptime(exp_str.strip(), "%d%b%Y")
                 except Exception:
-                    return datetime.max
+                    try:
+                        return datetime.strptime(exp_str.strip(), "%d-%b-%Y")
+                    except Exception:
+                        return datetime.max
 
-        unique_expiries = list(set(o["expiry"] for o in raw_options if o.get("expiry")))
-        sorted_expiries = sorted(unique_expiries, key=parse_exp)
+            unique_expiries = list(set(o["expiry"] for o in raw_options if o.get("expiry")))
+            self._expiries_cache[symbol] = sorted(unique_expiries, key=parse_exp)
+
+        sorted_expiries = self._expiries_cache[symbol]
 
         if not expiry or expiry not in sorted_expiries:
             expiry = sorted_expiries[0] if sorted_expiries else None
